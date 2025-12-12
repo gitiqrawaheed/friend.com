@@ -1,0 +1,161 @@
+/* SceneEssay - Main Essay with Video Background */
+
+/* Scene container */
+.sceneEssay {
+  position: relative;
+  width: 100vw;
+  min-height: 300vh;
+  overflow: hidden;
+}
+
+/* Fullscreen video background - stays fixed */
+.sceneEssay__video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 600;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sceneEssay__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content wrapper - scrolls on top of video */
+.sceneEssay__content {
+  position: relative;
+  z-index: 601;
+  padding-top: 30vh;
+  padding-bottom: 30vh;
+}
+
+/* Individual text block */
+.sceneEssay__block {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Text box styling */
+.sceneEssay__text {
+  max-width: 700px;
+  padding: 2rem 2.5rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: white;
+  text-align: left;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state */
+.sceneEssay__text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state - drifts upward */
+.sceneEssay__text.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Block 2 - text with images */
+.sceneEssay__block--with-images {
+  min-height: 100vh;
+}
+
+.sceneEssay__block--with-images .sceneEssay__text {
+  margin-bottom: 2rem;
+}
+
+/* Images row */
+.sceneEssay__images-row {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s;
+}
+
+/* Visible state */
+.sceneEssay__images-row.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state */
+.sceneEssay__images-row.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Individual images - modest size */
+.sceneEssay__image {
+  width: 180px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .sceneEssay__text {
+    font-size: 1.25rem;
+    padding: 1.5rem 2rem;
+    max-width: 90%;
+  }
+  
+  .sceneEssay__image {
+    width: 150px;
+    height: 200px;
+  }
+  
+  .sceneEssay__images-row {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sceneEssay__text {
+    font-size: 1.1rem;
+    padding: 1.2rem 1.5rem;
+    max-width: 95%;
+  }
+  
+  .sceneEssay__images-row {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+  
+  .sceneEssay__image {
+    width: 120px;
+    height: 160px;
+  }
+}
+

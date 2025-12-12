@@ -1,0 +1,242 @@
+/* SceneSurveillance - Pinned Word List + Scrolling Images */
+
+/* Scene container */
+.sceneSurveillance {
+  position: relative;
+  width: 100vw;
+  min-height: 300vh;
+  background-color: #0a0a0a;
+  overflow: hidden;
+}
+
+/* Fixed background layer */
+.sceneSurveillance__fixed-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1100;
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-out;
+}
+
+/* Left side - image viewport */
+.sceneSurveillance__image-viewport {
+  flex: 1;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  overflow: hidden;
+}
+
+/* Image stream container */
+.sceneSurveillance__image-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  max-height: 80vh;
+  overflow: hidden;
+}
+
+/* Individual image wrapper */
+.sceneSurveillance__image-wrapper {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.sceneSurveillance__image-wrapper.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Images - modest size, documentary feel */
+.sceneSurveillance__image {
+  max-width: 320px;
+  max-height: 240px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+/* Right side - pinned word list */
+.sceneSurveillance__word-panel {
+  width: 280px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 2.5rem;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Word list */
+.sceneSurveillance__word-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Individual word */
+.sceneSurveillance__word {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.25);
+  padding: 0.4rem 0;
+  letter-spacing: 0.03em;
+  transition: color 0.4s ease, font-weight 0.4s ease, transform 0.4s ease;
+}
+
+/* Active/emphasized word */
+.sceneSurveillance__word.active {
+  color: white;
+  font-weight: 500;
+  font-size: 1.4rem;
+  transform: translateX(4px);
+}
+
+/* Secondary emphasis */
+.sceneSurveillance__word.secondary {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
+/* Scrolling content layer - drives scroll */
+.sceneSurveillance__scroll-driver {
+  position: relative;
+  z-index: 1099;
+  height: 300vh;
+  pointer-events: none;
+}
+
+/* Image grid for cascading display */
+.sceneSurveillance__cascade {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 500px;
+}
+
+.sceneSurveillance__cascade .sceneSurveillance__image {
+  max-width: 220px;
+  max-height: 180px;
+}
+
+/* Interpretive pullquote - editorial, reflective */
+.sceneSurveillance__pullquote {
+  position: fixed;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  z-index: 1102;
+  
+  max-width: 580px;
+  padding: 1.8rem 2.2rem;
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.92);
+  text-align: left;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  
+  opacity: 0;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  pointer-events: none;
+}
+
+.sceneSurveillance__pullquote.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.sceneSurveillance__pullquote p {
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .sceneSurveillance__word-panel {
+    width: 220px;
+    padding: 2rem 1.5rem;
+  }
+  
+  .sceneSurveillance__word {
+    font-size: 1rem;
+  }
+  
+  .sceneSurveillance__word.active {
+    font-size: 1.2rem;
+  }
+  
+  .sceneSurveillance__image {
+    max-width: 260px;
+    max-height: 200px;
+  }
+  
+  .sceneSurveillance__pullquote {
+    max-width: 480px;
+    padding: 1.5rem 1.8rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sceneSurveillance__fixed-layer {
+    flex-direction: column-reverse;
+  }
+  
+  .sceneSurveillance__word-panel {
+    width: 100%;
+    height: auto;
+    padding: 1.5rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .sceneSurveillance__word-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem 1.5rem;
+    justify-content: center;
+  }
+  
+  .sceneSurveillance__word {
+    padding: 0.2rem 0;
+  }
+  
+  .sceneSurveillance__image-viewport {
+    height: auto;
+    min-height: 60vh;
+    padding: 2rem;
+  }
+  
+  .sceneSurveillance__image {
+    max-width: 200px;
+    max-height: 160px;
+  }
+  
+  .sceneSurveillance__pullquote {
+    max-width: 90%;
+    padding: 1.2rem 1.4rem;
+    font-size: 0.95rem;
+    bottom: 5%;
+    line-height: 1.6;
+  }
+}
+

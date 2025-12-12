@@ -3,7 +3,7 @@
 .scene03 {
   position: relative;
   width: 100vw;
-  min-height: 200vh; /* Scrollable space */
+  min-height: 150vh; /* More time for images to display */
   background-color: #000;
   overflow: hidden;
 }

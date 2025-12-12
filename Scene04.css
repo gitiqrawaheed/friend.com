@@ -10,7 +10,7 @@
 /* Section wrapper */
 .scene04__section {
   position: relative;
-  min-height: 200vh; /* Non-negotiable: enough scroll room for exit */
+  min-height: 60vh; /* Minimal scroll room */
   width: 100%;
 }
 
@@ -21,7 +21,7 @@
 
 /* Spacer - forces user to scroll before observer activates */
 .scene04__spacer {
-  height: 50vh;
+  height: 10vh;
   width: 100%;
   position: relative;
 }
