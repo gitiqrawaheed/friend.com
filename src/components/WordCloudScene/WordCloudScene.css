@@ -1,0 +1,40 @@
+.wordcloud-scene {
+  min-height: 150vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background-color: #000;
+}
+
+.wordcloud-container {
+  max-width: 900px;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.wordcloud-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wordcloud-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.wordcloud-citation {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.9rem;
+}
+
+.wordcloud-citation a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: underline;
+}

@@ -1,0 +1,72 @@
+.scene02a {
+  min-height: 200vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background-color: #000;
+  gap: 4rem;
+}
+
+.scene02a-text {
+  max-width: 650px;
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #000;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2);
+  font-weight: 500;
+  border-radius: 8px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.scene02a-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scene02a-morph {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+  margin: 4rem auto;
+}
+
+.morph-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.morph-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #000;
+  display: block;
+}
+
+.morph-a {
+  opacity: 1;
+  position: relative;
+}
+
+.morph-a.fade-out {
+  opacity: 0;
+}
+
+.morph-b.fade-in {
+  opacity: 1;
+  transform: scale(1);
+}

@@ -1,0 +1,19 @@
+.app {
+  width: 100%;
+  background-color: #000;
+}
+
+.scene-generic {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.scene-generic img {
+  display: block;
+}
+
+.scene-generic a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: underline;
+}

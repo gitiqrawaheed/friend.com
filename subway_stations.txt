@@ -1,0 +1,385 @@
+================================================================================
+NYC FRIENDS GRAFFITI - SUBWAY STATION LOCATIONS
+================================================================================
+
+Total graffiti: 114
+Stations found: 64
+Stations not found: 50
+
+================================================================================
+STATION LOCATIONS BY IMAGE
+================================================================================
+
+NYC_0000: Not found
+NYC_0001: 000114 Street [123]
+NYC_0002: Not found
+NYC_0003: Not found
+NYC_0004: 0004Halsey Street
+NYC_0005: Not found
+NYC_0006: Not found
+NYC_0007: Not found
+NYC_0008: Not found
+NYC_0009: Not found
+NYC_0010: 0010116 Street
+NYC_0011: Not found
+NYC_0012: Not found
+NYC_0013: 001314 Street [123]
+NYC_0014: Not found
+NYC_0015: Not found
+NYC_0016: 0016NO GODS
+NO MAST
+NYC_0017: Not found
+NYC_0018: Not found
+NYC_0019: Not found
+NYC_0020: AI CHATBOT
+AI wouldnt care if you lived or died
+ST
+NYC_0021: Not found
+NYC_0022: Not found
+NYC_0023: 002314 Street [123]
+NYC_0024: Not found
+NYC_0025: Not found
+NYC_0026: 002623 Street
+NYC_0027: 002777 Street [6]
+NYC_0028: 0028Elmhurst
+NYC_0029: Not found
+NYC_0030: Not found
+NYC_0031: Not found
+NYC_0032: Not found
+NYC_0033: Not found
+NYC_0034: Not found
+NYC_0035: 003514 Street [123]
+NYC_0036: 0036West [4]
+NYC_0037: 0037Dyckman Street
+NYC_0038: 0038West [4]
+NYC_0039: 0039West [4]
+NYC_0040: 0040West [4]
+NYC_0041: 0041West [4]
+NYC_0042: 0042West [4]
+NYC_0043: 0043West [4]
+NYC_0044: 0044West [4]
+NYC_0045: 0045West [4]
+NYC_0046: 0046West [4]
+NYC_0047: 0047West [4]
+NYC_0048: 0048West [4]
+NYC_0049: 0049West [4]
+NYC_0050: 0050West [4]
+NYC_0051: 0051West [4]
+NYC_0052: 0052West [4]
+NYC_0053: 0053West [4]
+NYC_0054: 0054West [4]
+NYC_0055: 0055West [4]
+NYC_0056: 0056West [4]
+NYC_0057: 0057West [4]
+NYC_0058: 0058West [4]
+NYC_0059: 0059West [4]
+NYC_0060: 0060West [4]
+NYC_0061: 0061West [4]
+NYC_0062: 0062West [4]
+NYC_0063: 0063West [4]
+NYC_0064: 0064West [4]
+NYC_0065: 0065West [4]
+NYC_0066: 0066West [4]
+NYC_0067: 0067West [4]
+NYC_0068: 0068West [4]
+NYC_0069: 0069West [4]
+NYC_0070: 0070West [4]
+NYC_0071: 0071West [4]
+NYC_0072: 0072West [4]
+NYC_0073: 0073West [4]
+NYC_0074: Not found
+NYC_0075: Not found
+NYC_0076: 0076FREE PALEST
+NYC_0077: Not found
+NYC_0078: Not found
+NYC_0079: s the WORst
+NYC_0080: Not found
+NYC_0081: 0081West [4]
+NYC_0082: 0082West [4]
+NYC_0083: 0083West [4]
+NYC_0084: 0084West [4]
+NYC_0085: 0085West [4]
+NYC_0086: Not found
+NYC_0087: 0087West [4]
+NYC_0088: 0088West [4]
+NYC_0089: Not found
+NYC_0090: Not found
+NYC_0091: The climate cost
+NYC_0092: Not found
+NYC_0093: Not found
+NYC_0094: Not found
+NYC_0095: 009551 Street [6]
+NYC_0096: Not found
+NYC_0097: 0097MASS SURVEILLANCE
+WE DONT HAV
+NYC_0098: Not found
+NYC_0099: Error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+NYC_0100: Not found
+NYC_0101: Not found
+NYC_0102: Not found
+NYC_0103: Not found
+NYC_0104: Not found
+NYC_0105: Not found
+NYC_0106: Not found
+NYC_0107: Not found
+NYC_0108: Not found
+NYC_0109: 0109Carroll Street
+NYC_0110: TRAPHOUSENASA SOUNDCLOUD INST
+NYC_0111: 0111West [4]
+NYC_0112: Not found
+NYC_0113: Not found
+
+================================================================================
+GROUPED BY STATION
+================================================================================
+
+
+000114 Street (1 graffiti):
+  NYC_0001 [123]
+
+0004Halsey Street (1 graffiti):
+  NYC_0004
+
+0010116 Street (1 graffiti):
+  NYC_0010
+
+001314 Street (1 graffiti):
+  NYC_0013 [123]
+
+0016NO GODS
+NO MAST (1 graffiti):
+  NYC_0016
+
+002314 Street (1 graffiti):
+  NYC_0023 [123]
+
+002623 Street (1 graffiti):
+  NYC_0026
+
+002777 Street (1 graffiti):
+  NYC_0027 [6]
+
+0028Elmhurst (1 graffiti):
+  NYC_0028
+
+003514 Street (1 graffiti):
+  NYC_0035 [123]
+
+0036West (1 graffiti):
+  NYC_0036 [4]
+
+0037Dyckman Street (1 graffiti):
+  NYC_0037
+
+0038West (1 graffiti):
+  NYC_0038 [4]
+
+0039West (1 graffiti):
+  NYC_0039 [4]
+
+0040West (1 graffiti):
+  NYC_0040 [4]
+
+0041West (1 graffiti):
+  NYC_0041 [4]
+
+0042West (1 graffiti):
+  NYC_0042 [4]
+
+0043West (1 graffiti):
+  NYC_0043 [4]
+
+0044West (1 graffiti):
+  NYC_0044 [4]
+
+0045West (1 graffiti):
+  NYC_0045 [4]
+
+0046West (1 graffiti):
+  NYC_0046 [4]
+
+0047West (1 graffiti):
+  NYC_0047 [4]
+
+0048West (1 graffiti):
+  NYC_0048 [4]
+
+0049West (1 graffiti):
+  NYC_0049 [4]
+
+0050West (1 graffiti):
+  NYC_0050 [4]
+
+0051West (1 graffiti):
+  NYC_0051 [4]
+
+0052West (1 graffiti):
+  NYC_0052 [4]
+
+0053West (1 graffiti):
+  NYC_0053 [4]
+
+0054West (1 graffiti):
+  NYC_0054 [4]
+
+0055West (1 graffiti):
+  NYC_0055 [4]
+
+0056West (1 graffiti):
+  NYC_0056 [4]
+
+0057West (1 graffiti):
+  NYC_0057 [4]
+
+0058West (1 graffiti):
+  NYC_0058 [4]
+
+0059West (1 graffiti):
+  NYC_0059 [4]
+
+0060West (1 graffiti):
+  NYC_0060 [4]
+
+0061West (1 graffiti):
+  NYC_0061 [4]
+
+0062West (1 graffiti):
+  NYC_0062 [4]
+
+0063West (1 graffiti):
+  NYC_0063 [4]
+
+0064West (1 graffiti):
+  NYC_0064 [4]
+
+0065West (1 graffiti):
+  NYC_0065 [4]
+
+0066West (1 graffiti):
+  NYC_0066 [4]
+
+0067West (1 graffiti):
+  NYC_0067 [4]
+
+0068West (1 graffiti):
+  NYC_0068 [4]
+
+0069West (1 graffiti):
+  NYC_0069 [4]
+
+0070West (1 graffiti):
+  NYC_0070 [4]
+
+0071West (1 graffiti):
+  NYC_0071 [4]
+
+0072West (1 graffiti):
+  NYC_0072 [4]
+
+0073West (1 graffiti):
+  NYC_0073 [4]
+
+0076FREE PALEST (1 graffiti):
+  NYC_0076
+
+0081West (1 graffiti):
+  NYC_0081 [4]
+
+0082West (1 graffiti):
+  NYC_0082 [4]
+
+0083West (1 graffiti):
+  NYC_0083 [4]
+
+0084West (1 graffiti):
+  NYC_0084 [4]
+
+0085West (1 graffiti):
+  NYC_0085 [4]
+
+0087West (1 graffiti):
+  NYC_0087 [4]
+
+0088West (1 graffiti):
+  NYC_0088 [4]
+
+009551 Street (1 graffiti):
+  NYC_0095 [6]
+
+0097MASS SURVEILLANCE
+WE DONT HAV (1 graffiti):
+  NYC_0097
+
+0109Carroll Street (1 graffiti):
+  NYC_0109
+
+0111West (1 graffiti):
+  NYC_0111 [4]
+
+AI CHATBOT
+AI wouldnt care if you lived or died
+ST (1 graffiti):
+  NYC_0020
+
+Error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer')) (1 graffiti):
+  NYC_0099
+
+Not found (49 graffiti):
+  NYC_0000
+  NYC_0002
+  NYC_0003
+  NYC_0005
+  NYC_0006
+  NYC_0007
+  NYC_0008
+  NYC_0009
+  NYC_0011
+  NYC_0012
+  NYC_0014
+  NYC_0015
+  NYC_0017
+  NYC_0018
+  NYC_0019
+  NYC_0021
+  NYC_0022
+  NYC_0024
+  NYC_0025
+  NYC_0029
+  NYC_0030
+  NYC_0031
+  NYC_0032
+  NYC_0033
+  NYC_0034
+  NYC_0074
+  NYC_0075
+  NYC_0077
+  NYC_0078
+  NYC_0080
+  NYC_0086
+  NYC_0089
+  NYC_0090
+  NYC_0092
+  NYC_0093
+  NYC_0094
+  NYC_0096
+  NYC_0098
+  NYC_0100
+  NYC_0101
+  NYC_0102
+  NYC_0103
+  NYC_0104
+  NYC_0105
+  NYC_0106
+  NYC_0107
+  NYC_0108
+  NYC_0112
+  NYC_0113
+
+TRAPHOUSENASA SOUNDCLOUD INST (1 graffiti):
+  NYC_0110
+
+The climate cost (1 graffiti):
+  NYC_0091
+
+s the WORst (1 graffiti):
+  NYC_0079

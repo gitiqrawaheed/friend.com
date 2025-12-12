@@ -1,0 +1,34 @@
+.scene09 {
+  min-height: 500vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+  background-color: #000;
+  gap: 4rem;
+}
+
+.scene09-block {
+  width: 100%;
+  max-width: 700px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.scene09-block.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scene09-image {
+  width: 100%;
+}
+
+.scene09-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #000;
+  display: block;
+}

@@ -1,0 +1,3 @@
+# Public directory for static assets
+# Copy or symlink your pictures folder here:
+# ln -s ../pictures ./pictures

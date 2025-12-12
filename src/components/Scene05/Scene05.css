@@ -1,0 +1,58 @@
+.scene05 {
+  min-height: 150vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  overflow: hidden;
+}
+
+.scene05-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.scene05-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scene05-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.scene05-text {
+  position: relative;
+  z-index: 2;
+  max-width: 650px;
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #000;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2);
+  font-weight: 500;
+  border-radius: 8px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.scene05-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
