@@ -1,0 +1,38 @@
+/* Scene05 - Photo fade transition */
+/* Scene container */
+.scene05 {
+  position: relative;
+  width: 100vw;
+  min-height: 250vh; /* Scrollable space for fade transition */
+  overflow: hidden;
+}
+
+/* Fullscreen background - initial image (1photowow.png) */
+.scene05__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 600; /* Above Scene04 */
+}
+
+.scene05__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Photo overlay - fades in on top of background (photowow.png) */
+.scene05__photo-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 601; /* Above background */
+  opacity: 0;
+  transition: opacity 1s ease-out;
+  pointer-events: none;
+}
