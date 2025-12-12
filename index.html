@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="SceneOrsi.css">
     <link rel="stylesheet" href="SceneIconic.css">
     <link rel="stylesheet" href="SceneConclusion.css">
+    <link rel="stylesheet" href="SceneFinalZoom.css">
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -2469,6 +2470,98 @@
           )
         }
 
+        function SceneFinalZoom() {
+          const [scrollProgress, setScrollProgress] = useState(0)
+          const [textState, setTextState] = useState('hidden')
+          const sceneRef = useRef(null)
+          const textRef = useRef(null)
+
+          useEffect(() => {
+            const handleScroll = () => {
+              if (sceneRef.current) {
+                const rect = sceneRef.current.getBoundingClientRect()
+                const windowHeight = window.innerHeight
+                const sceneHeight = rect.height
+                
+                const progress = rect.top < windowHeight
+                  ? Math.max(0, Math.min(1, 
+                      (windowHeight - rect.top) / (windowHeight + sceneHeight)
+                    ))
+                  : 0
+                setScrollProgress(progress)
+              }
+            }
+
+            window.addEventListener('scroll', handleScroll)
+            handleScroll()
+
+            return () => window.removeEventListener('scroll', handleScroll)
+          }, [])
+
+          useEffect(() => {
+            const observerOptions = {
+              threshold: [0, 0.3, 0.7, 1],
+              rootMargin: '-10% 0px -10% 0px'
+            }
+
+            const handleIntersection = (entries) => {
+              entries.forEach(entry => {
+                const ratio = entry.intersectionRatio
+                if (!entry.isIntersecting) {
+                  if (entry.boundingClientRect.top < 0) {
+                    setTextState('exit')
+                  } else {
+                    setTextState('hidden')
+                  }
+                } else if (ratio > 0.3) {
+                  setTextState('visible')
+                } else if (ratio > 0) {
+                  setTextState('visible')
+                }
+              })
+            }
+
+            const observer = new IntersectionObserver(handleIntersection, observerOptions)
+            if (textRef.current) observer.observe(textRef.current)
+
+            return () => observer.disconnect()
+          }, [])
+
+          // Background visibility (always visible when in scene)
+          const backgroundVisible = scrollProgress > 0
+          // Zoom: scale(1.0) at start → scale(2.2) at end, slow and cinematic
+          const zoomScale = 1 + (scrollProgress * 1.2)
+
+          return (
+            <div ref={sceneRef} className="sceneFinalZoom">
+              {/* Fullscreen background with zoom */}
+              <div 
+                className="sceneFinalZoom__background"
+                style={{ opacity: backgroundVisible ? 1 : 0 }}
+              >
+                <img 
+                  src="/pictures/crosssymbol.png" 
+                  alt="Cross symbol"
+                  className="sceneFinalZoom__bg-image"
+                  style={{ transform: `scale(${zoomScale})` }}
+                />
+              </div>
+
+              <div className="sceneFinalZoom__content">
+                {/* Text Block */}
+                <div ref={textRef} className="sceneFinalZoom__block">
+                  <div className={`sceneFinalZoom__text ${textState}`}>
+                    <p>Newer corporations like Schiffmann's, as well as industry giants like Meta and Google, all fall into a belief that I share with others who study these dynamics, which is that the tech sphere's obsession with AI and its rejection of religion often resembles a new kind of… religion.</p>
+                    <p>Schiffmann wrote in a now-deleted post on X, "Nothing is sacred anymore, everything is ironic." Riders' sentiment was not against a traditional religious doctrine, but was against Schiffman's lack of emotional honesty and violation of spiritual autonomy through the use of AI. A lot of the graffiti doesn't imply a mob of AI haters, but instead, insists that sacredness persists and that it cannot be claimed by a device that listens without relationship. The relationship between friends or the relationship between God and a follower: Friend fails to ever come close to falling into the category of either.</p>
+                    <p>When an idea enters public life and the people it hopes to serve reject its beliefs, the outcome shows that technologies do not define the social world. Communities always do, and each city negotiates these boundaries differently depending on its own histories and public sensibilities New Yorkers adopt a unique form of negotiation, because despite the city's range of lifestyles, residents share a civic instinct to confront powerful institutions and to refuse claims that threaten the social fabric they have worked to maintain. This ad marks a moment amongst many, of a new technology trying to claim emotional and spiritual presence over the world.</p>
+                    <p>If there's one thing New York doesn't do, it is hold back.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
         function App() {
           return (
             <>
@@ -2489,6 +2582,7 @@
               <SceneOrsi />
               <SceneIconic />
               <SceneConclusion />
+              <SceneFinalZoom />
             </>
           )
         }
