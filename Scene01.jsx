@@ -67,7 +67,7 @@ export default function Scene01() {
 
       {/* Text Overlay 1 */}
       <div className={`scene01__text scene01__text--1 ${text1Visible ? 'visible' : ''}`}>
-        <p>A mysterious ad came to New York City riders.</p>
+        <p>Late September, 2025, a mysterious ad introduced itself to New York City riders.</p>
       </div>
 
       {/* Text Overlay 2 */}
