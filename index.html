@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="SceneIconic.css">
     <link rel="stylesheet" href="SceneConclusion.css">
     <link rel="stylesheet" href="SceneFinalZoom.css">
+    <link rel="stylesheet" href="SceneReferences.css">
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -2562,6 +2563,99 @@
           )
         }
 
+        function SceneReferences() {
+          const [isOpen, setIsOpen] = useState(false)
+
+          return (
+            <div className="sceneReferences">
+              {/* About This Project section */}
+              <div className="sceneReferences__about">
+                <h3 className="sceneReferences__about-title">About This Project</h3>
+                <div className="sceneReferences__about-text">
+                  <p>This project was developed as the final assignment for Religion in the City, a course at Columbia University taught by Professor Courtney Bender and Cella Masso-Rivetti.</p>
+                  <p>The analysis draws on materials scraped from the NYC Friends Graffiti Archive (<a href="https://nyc-friends.vercel.app/all#NYC-0104" target="_blank" rel="noopener noreferrer">https://nyc-friends.vercel.app/all#NYC-0104</a>), using a custom data-collection script.</p>
+                  <p>For questions, comments, or collaborations, please contact:<br />Iqra Waheed - <a href="mailto:iw2240@columbia.edu">iw2240@columbia.edu</a></p>
+                </div>
+              </div>
+
+              {/* Tab button */}
+              <button 
+                className="sceneReferences__tab"
+                onClick={() => setIsOpen(true)}
+              >
+                <span className="sceneReferences__tab-icon">📚</span>
+                <span>References</span>
+              </button>
+
+              {/* Expandable panel */}
+              <div className={`sceneReferences__panel ${isOpen ? 'open' : ''}`}>
+                <div className="sceneReferences__panel-inner">
+                  <div className="sceneReferences__close">
+                    <button 
+                      className="sceneReferences__close-btn"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      ✕ Close
+                    </button>
+                  </div>
+
+                  <h2 className="sceneReferences__heading">References</h2>
+
+                  <div className="sceneReferences__list">
+                    <p className="sceneReferences__entry">
+                      CNN Business. 2025. "How This Tiny Device Became a Symbol for the Backlash Against AI." Accessed December 2025. CNN. <a href="https://www.cnn.com/2025/11/16/tech/friend-ai-device-backlash-ceo-avi-schiffmann" target="_blank" rel="noopener noreferrer">https://www.cnn.com/2025/11/16/tech/friend-ai-device-backlash-ceo-avi-schiffmann</a>.
+                    </p>
+
+                    <p className="sceneReferences__entry">
+                      Durkheim, Émile. 1912. The Elementary Forms of Religious Life. Translated by Karen E. Fields. New York: Free Press, 1995.
+                    </p>
+
+                    <p className="sceneReferences__entry">
+                      Engelke, Matthew. 2012. "Angels in Swindon: Public Religion and Ambient Faith in England." American Ethnologist 39 (1): 155–170.
+                    </p>
+
+                    <p className="sceneReferences__entry">
+                      Fortune. 2024. "'Friend' Creator Avi Schiffmann Says AI Necklace Is Like Talking to God." Accessed December 2025. <a href="https://fortune.com/2024/08/12/avi-schiffmann-ai-necklace-friend-interview/" target="_blank" rel="noopener noreferrer">https://fortune.com/2024/08/12/avi-schiffmann-ai-necklace-friend-interview/</a>.
+                    </p>
+
+                    <p className="sceneReferences__entry">
+                      James, William. 1902. The Varieties of Religious Experience: A Study in Human Nature. New York: Longmans, Green, and Co.
+                    </p>
+
+                    <p className="sceneReferences__entry">
+                      NYC Friends Graffiti Archive. 2025. "All Entries: User-Uploaded Graffiti on Friend.com Subway Ads." Accessed and scraped December 2025. <a href="https://nyc-friends.vercel.app/all#NYC-0048" target="_blank" rel="noopener noreferrer">https://nyc-friends.vercel.app/all#NYC-0048</a>.
+                    </p>
+
+                    <p className="sceneReferences__entry">
+                      Orsi, Robert A. 1999. "Crossing the City Line." In Gods of the City: Religion and the American Urban Landscape, edited by Robert A. Orsi, 1–18. Bloomington: Indiana University Press.
+                    </p>
+
+                    <p className="sceneReferences__entry">
+                      Petro, Anthony M. 2017. "Ray Navarro's Jesus Camp, AIDS Activist Video, and the 'New Anti-Catholicism.'" Journal of the American Academy of Religion 85 (4): 920–956.
+                    </p>
+
+                    <p className="sceneReferences__entry">
+                      San Francisco Standard. 2025. "He Wanted a Friend Who Always Listens and Never Leaves. So He Built One." Accessed December 2025. <a href="https://sfstandard.com/2025/11/16/avi-schiffmann-friend-ai-pendant-loneliness-profile/" target="_blank" rel="noopener noreferrer">https://sfstandard.com/2025/11/16/avi-schiffmann-friend-ai-pendant-loneliness-profile/</a>.
+                    </p>
+
+                    <p className="sceneReferences__entry">
+                      Schiffmann, Avi. 2025. Posts on X (formerly Twitter). <a href="https://x.com/AviSchiffmann" target="_blank" rel="noopener noreferrer">https://x.com/AviSchiffmann</a>.
+                    </p>
+
+                    <p className="sceneReferences__entry">
+                      Simmel, Georg. 1950. "The Metropolis and Mental Life." In The Sociology of Georg Simmel, edited by Kurt H. Wolff, 409–424. Glencoe, IL: Free Press. (Original essay published 1903.)
+                    </p>
+
+                    <p className="sceneReferences__entry">
+                      Weiner, Isaac. 2013. "Calling Muslims—and Christians—to Pray." In Religion Out Loud: Religious Sound, Public Space, and American Pluralism, 155–191. New York: New York University Press.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
         function App() {
           return (
             <>
@@ -2583,6 +2677,7 @@
               <SceneIconic />
               <SceneConclusion />
               <SceneFinalZoom />
+              <SceneReferences />
             </>
           )
         }
