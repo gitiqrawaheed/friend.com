@@ -1,0 +1,142 @@
+/* Scene01 - Opening scrollytelling scene */
+/* Scene container supports scrollytelling with min-height: 350vh for more scroll space */
+.scene01 {
+  position: relative;
+  width: 100vw;
+  min-height: 350vh; /* Increased to allow fourth text and graffiti to stay longer */
+  overflow: hidden;
+}
+
+/* Fullscreen background - fixed position, covers entire viewport */
+.scene01__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+.scene01__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Without-graffiti overlay - fades in on top of text */
+.scene01__without-graffiti-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 11;
+  opacity: 0;
+  transition: opacity 1s ease-out;
+  pointer-events: none;
+}
+
+/* Graffiti overlay - fades in on top of without-graffiti overlay */
+/* Highest z-index to fully cover everything including text */
+.scene01__graffiti-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 1s ease-out;
+  pointer-events: none;
+}
+
+/* Text overlays - white text with translucent background */
+.scene01__text {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  
+  padding: 1.5rem 2rem;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: white;
+  text-align: center;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  
+  max-width: 600px;
+  
+  /* Initial state - hidden, slightly below */
+  opacity: 0;
+  transform: translateX(-50%) translateY(20px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+/* Fourth text appears on top of graffiti (higher z-index) */
+.scene01__text--4 {
+  z-index: 101;
+  /* Remove transition on transform so inline transform can control movement smoothly */
+  transition: opacity 0.3s ease-out;
+}
+
+/* Override .visible class transform for fourth text box - let inline style control it */
+.scene01__text--4.visible {
+  transform: none; /* Let inline style handle transform */
+}
+
+/* Visible state - fade in and slide up */
+/* Note: opacity is also controlled by inline style for fade-out effect (for first 3 text boxes) */
+.scene01__text.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Text positioning - adjust top values to change vertical placement */
+.scene01__text--1 {
+  top: 20%;
+}
+
+.scene01__text--2 {
+  top: 40%;
+}
+
+.scene01__text--3 {
+  top: 60%;
+}
+
+.scene01__text--4 {
+  top: 50%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .scene01__text {
+    font-size: 1.2rem;
+    padding: 1.2rem 1.5rem;
+    max-width: 90%;
+  }
+  
+  .scene01__text--1 {
+    top: 15%;
+  }
+  
+  .scene01__text--2 {
+    top: 35%;
+  }
+  
+  .scene01__text--3 {
+    top: 55%;
+  }
+  
+  .scene01__text--4 {
+    top: 45%;
+  }
+}
+
