@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="Scene02.css">
     <link rel="stylesheet" href="Scene03.css">
     <link rel="stylesheet" href="Scene04.css">
+    <link rel="stylesheet" href="SceneFinal.css">
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -573,6 +574,73 @@
           )
         }
 
+        function SceneFinal() {
+          const [scrollProgress, setScrollProgress] = useState(0)
+          const sceneRef = useRef(null)
+
+          useEffect(() => {
+            const handleScroll = () => {
+              if (sceneRef.current) {
+                const rect = sceneRef.current.getBoundingClientRect()
+                const windowHeight = window.innerHeight
+                const sceneHeight = rect.height
+                
+                // Only activate when scene enters viewport
+                const progress = rect.top < windowHeight
+                  ? Math.max(0, Math.min(1, 
+                      (windowHeight - rect.top) / (windowHeight + sceneHeight)
+                    ))
+                  : 0
+                setScrollProgress(progress)
+              }
+            }
+
+            window.addEventListener('scroll', handleScroll)
+            handleScroll()
+
+            return () => {
+              window.removeEventListener('scroll', handleScroll)
+            }
+          }, [])
+
+          // Background only appears when SceneFinal is in viewport
+          const backgroundOpacity = scrollProgress > 0 ? 1 : 0
+          
+          // Photo overlay fades in as user scrolls (opacity only, no movement)
+          // Starts fading in at 20% scroll, fully visible by 60%
+          const photoOpacity = scrollProgress > 0 
+            ? Math.max(0, Math.min(1, (scrollProgress - 0.2) / 0.4))
+            : 0
+
+          return (
+            <div ref={sceneRef} className="sceneFinal">
+              {/* Initial background image - only visible when scene is in viewport */}
+              <div 
+                className="sceneFinal__background"
+                style={{ opacity: backgroundOpacity }}
+              >
+                <img 
+                  src="/pictures/1photowow.png" 
+                  alt="Background"
+                  className="sceneFinal__bg-image"
+                />
+              </div>
+
+              {/* Photo overlay - fades in on scroll (opacity only, morphing effect) */}
+              <div 
+                className="sceneFinal__photo-overlay"
+                style={{ opacity: photoOpacity }}
+              >
+                <img 
+                  src="/pictures/photowow.png" 
+                  alt="Photo overlay"
+                  className="sceneFinal__bg-image"
+                />
+              </div>
+            </div>
+          )
+        }
+
         function App() {
           return (
             <>
@@ -580,6 +648,7 @@
               <Scene02 />
               <Scene03 />
               <Scene04 />
+              <SceneFinal />
             </>
           )
         }
