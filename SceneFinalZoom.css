@@ -1,0 +1,122 @@
+/* SceneFinalZoom - Technology, Sacredness, and Refusal */
+
+/* Scene container */
+.sceneFinalZoom {
+  position: relative;
+  width: 100vw;
+  min-height: 300vh;
+  overflow: hidden;
+}
+
+/* Fullscreen background - fixed, with zoom capability */
+.sceneFinalZoom__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1800;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Background image - zoom transforms applied here */
+.sceneFinalZoom__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Transform origin centered on the cross (coordinates 2150, 2231 in 3024 × 4032 image) */
+  transform-origin: 71% 55%;
+  /* Smooth zoom transition */
+  will-change: transform;
+}
+
+/* Content wrapper - scrolls on top of background */
+.sceneFinalZoom__content {
+  position: relative;
+  z-index: 1801;
+  padding-top: 30vh;
+  padding-bottom: 50vh;
+}
+
+/* Individual block */
+.sceneFinalZoom__block {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Text box styling */
+.sceneFinalZoom__text {
+  max-width: 760px;
+  padding: 2.5rem 3rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(14px);
+  border-radius: 14px;
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.18rem;
+  font-weight: 400;
+  color: white;
+  text-align: left;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state */
+.sceneFinalZoom__text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state - drifts upward */
+.sceneFinalZoom__text.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+.sceneFinalZoom__text p {
+  margin: 0;
+}
+
+.sceneFinalZoom__text p + p {
+  margin-top: 1.5rem;
+}
+
+/* Final line emphasis */
+.sceneFinalZoom__text p:last-child {
+  font-weight: 500;
+  margin-top: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .sceneFinalZoom__text {
+    font-size: 1.1rem;
+    padding: 2rem 2.5rem;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sceneFinalZoom__text {
+    font-size: 1rem;
+    padding: 1.5rem 1.8rem;
+    max-width: 95%;
+    line-height: 1.75;
+  }
+  
+  .sceneFinalZoom__block {
+    min-height: 50vh;
+  }
+}
+

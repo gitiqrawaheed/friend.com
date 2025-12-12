@@ -1,0 +1,226 @@
+/* SceneTheory - Theory & Analytical Framework */
+
+/* Scene container */
+.sceneTheory {
+  position: relative;
+  width: 100vw;
+  min-height: 550vh;
+  overflow: hidden;
+}
+
+/* Fullscreen video background - stays fixed */
+.sceneTheory__video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sceneTheory__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content wrapper - scrolls on top of video */
+.sceneTheory__content {
+  position: relative;
+  z-index: 1001;
+  padding-top: 30vh;
+  padding-bottom: 30vh;
+}
+
+/* Individual block */
+.sceneTheory__block {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Text box styling */
+.sceneTheory__text {
+  max-width: 750px;
+  padding: 2rem 2.5rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: white;
+  text-align: left;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state */
+.sceneTheory__text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state - drifts upward */
+.sceneTheory__text.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Long text block - slightly larger container */
+.sceneTheory__text--long {
+  max-width: 800px;
+  font-size: 1.25rem;
+  line-height: 1.75;
+}
+
+.sceneTheory__text--long p {
+  margin-bottom: 1.5rem;
+}
+
+.sceneTheory__text--long p:last-child {
+  margin-bottom: 0;
+}
+
+/* Subheader styling - visually distinct but restrained */
+.sceneTheory__subheader {
+  padding: 1.5rem 2rem;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);
+  border-radius: 10px;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.sceneTheory__subheader h2 {
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+/* Pink glow effect */
+.sceneTheory__subheader {
+  box-shadow: 
+    0 0 25px rgba(255, 130, 180, 0.4),
+    0 0 50px rgba(255, 100, 160, 0.25),
+    0 0 80px rgba(255, 80, 140, 0.15);
+}
+
+/* Visible state */
+.sceneTheory__subheader.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state - drifts upward */
+.sceneTheory__subheader.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Images row block */
+.sceneTheory__images-block {
+  min-height: 60vh;
+}
+
+/* Images row container */
+.sceneTheory__images-row {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2rem;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state */
+.sceneTheory__images-row.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state */
+.sceneTheory__images-row.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Individual images - same height, modest size */
+.sceneTheory__image {
+  height: 180px;
+  width: auto;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .sceneTheory__text {
+    font-size: 1.2rem;
+    padding: 1.5rem 2rem;
+    max-width: 90%;
+  }
+  
+  .sceneTheory__text--long {
+    font-size: 1.15rem;
+  }
+  
+  .sceneTheory__image {
+    height: 150px;
+  }
+  
+  .sceneTheory__images-row {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sceneTheory__text {
+    font-size: 1.05rem;
+    padding: 1.2rem 1.5rem;
+    max-width: 95%;
+    line-height: 1.6;
+  }
+  
+  .sceneTheory__text--long {
+    font-size: 1rem;
+  }
+  
+  .sceneTheory__text--long p {
+    margin-bottom: 1.2rem;
+  }
+  
+  .sceneTheory__image {
+    height: 120px;
+  }
+  
+  .sceneTheory__images-row {
+    gap: 0.8rem;
+  }
+}
+

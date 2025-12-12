@@ -1,0 +1,157 @@
+/* SceneListening - A Friend That Listens */
+
+/* Scene container */
+.sceneListening {
+  position: relative;
+  width: 100vw;
+  min-height: 250vh;
+  overflow: hidden;
+}
+
+/* Fullscreen background image - stays fixed, fades in smoothly */
+.sceneListening__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1200;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.sceneListening__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content wrapper - scrolls on top of background */
+.sceneListening__content {
+  position: relative;
+  z-index: 1201;
+  padding-top: 30vh;
+  padding-bottom: 30vh;
+}
+
+/* Individual block */
+.sceneListening__block {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Subheading styling - visually distinct but restrained */
+.sceneListening__subheading {
+  padding: 1.2rem 2rem;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  letter-spacing: 0.02em;
+  
+  /* Pink glow effect */
+  box-shadow: 
+    0 0 25px rgba(255, 130, 180, 0.4),
+    0 0 50px rgba(255, 100, 160, 0.25),
+    0 0 80px rgba(255, 80, 140, 0.15);
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state */
+.sceneListening__subheading.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state - drifts upward */
+.sceneListening__subheading.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Text box styling */
+.sceneListening__text {
+  max-width: 750px;
+  padding: 2rem 2.5rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: white;
+  text-align: left;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state */
+.sceneListening__text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state - drifts upward */
+.sceneListening__text.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+.sceneListening__text p {
+  margin: 0 0 1.5rem 0;
+}
+
+.sceneListening__text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .sceneListening__subheading {
+    font-size: 1.4rem;
+    padding: 1rem 1.5rem;
+  }
+  
+  .sceneListening__text {
+    font-size: 1.15rem;
+    padding: 1.5rem 2rem;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sceneListening__subheading {
+    font-size: 1.2rem;
+    padding: 0.8rem 1.2rem;
+  }
+  
+  .sceneListening__text {
+    font-size: 1.05rem;
+    padding: 1.2rem 1.5rem;
+    max-width: 95%;
+    line-height: 1.65;
+  }
+}
+

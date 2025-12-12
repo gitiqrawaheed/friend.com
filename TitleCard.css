@@ -1,0 +1,53 @@
+/* TitleCard - Title card scene with image fade */
+/* Scene container - allows natural scroll after fade */
+.title-card {
+  position: relative;
+  width: 100vw;
+  min-height: 200vh; /* Scrollable space for fade transition and natural scroll */
+  overflow: hidden;
+}
+
+/* Fullscreen background - initial image (quiet and unresolved) */
+.title-card__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.title-card__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Title image overlay - fades in on scroll, becomes dominant visual */
+/* Smooth and restrained transition - opacity only, no movement */
+.title-card__title-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2; /* Above background */
+  opacity: 0;
+  transition: opacity 2s ease-out; /* Smooth, restrained fade */
+  pointer-events: none;
+}
+
+/* Once fully visible, becomes the dominant visual */
+.title-card__title-overlay.visible {
+  opacity: 1;
+}
+
+.title-card__title-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+

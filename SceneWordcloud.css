@@ -1,0 +1,141 @@
+/* SceneWordcloud - Word Cloud Visualization */
+
+/* Scene container */
+.sceneWordcloud {
+  position: relative;
+  width: 100vw;
+  min-height: 220vh;
+  overflow: hidden;
+  background-color: #000;
+}
+
+/* Neutral background - consistent with essay scenes */
+.sceneWordcloud__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 900;
+  background-color: #000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Content wrapper - scrolls on top of background */
+.sceneWordcloud__content {
+  position: relative;
+  z-index: 901;
+  padding-top: 20vh;
+  padding-bottom: 30vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Word cloud image container */
+.sceneWordcloud__image-block {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Word cloud image - evidentiary, centered, fairly large */
+.sceneWordcloud__image {
+  max-width: 800px;
+  width: 85%;
+  height: auto;
+  border-radius: 8px;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state */
+.sceneWordcloud__image.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state - drifts upward */
+.sceneWordcloud__image.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Text block container */
+.sceneWordcloud__text-block {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Text box styling */
+.sceneWordcloud__text {
+  max-width: 750px;
+  padding: 2rem 2.5rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: white;
+  text-align: left;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state */
+.sceneWordcloud__text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state - drifts upward */
+.sceneWordcloud__text.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .sceneWordcloud__image {
+    max-width: 700px;
+    width: 90%;
+  }
+  
+  .sceneWordcloud__text {
+    font-size: 1.2rem;
+    padding: 1.5rem 2rem;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sceneWordcloud__image {
+    max-width: 95%;
+  }
+  
+  .sceneWordcloud__text {
+    font-size: 1.05rem;
+    padding: 1.2rem 1.5rem;
+    max-width: 95%;
+    line-height: 1.6;
+  }
+}
+

@@ -1,0 +1,265 @@
+/* SceneReferences - Expandable References Tab */
+
+/* Scene container */
+.sceneReferences {
+  position: relative;
+  width: 100vw;
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 6vh 0 15vh 0;
+  gap: 5vh;
+  background: #0a0a0c;
+  z-index: 2000;
+}
+
+/* About This Project section */
+.sceneReferences__about {
+  max-width: 650px;
+  padding: 2rem 2.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  
+  /* Gentle fade-in */
+  animation: fadeInAbout 1.2s ease-out forwards;
+}
+
+@keyframes fadeInAbout {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sceneReferences__about-title {
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 1.2rem 0;
+  letter-spacing: 0.02em;
+}
+
+.sceneReferences__about-text {
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.sceneReferences__about-text p {
+  margin: 0;
+}
+
+.sceneReferences__about-text p + p {
+  margin-top: 1rem;
+}
+
+.sceneReferences__about-text a {
+  color: rgba(180, 200, 255, 0.85);
+  text-decoration: none;
+  word-break: break-all;
+  transition: color 0.2s ease;
+}
+
+.sceneReferences__about-text a:hover {
+  color: rgba(200, 220, 255, 1);
+  text-decoration: underline;
+}
+
+/* References tab button - cute, academic */
+.sceneReferences__tab {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.8rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  cursor: pointer;
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.02em;
+  
+  transition: all 0.3s ease;
+  
+  /* Gentle fade-in animation */
+  animation: fadeInTab 1s ease-out forwards;
+}
+
+@keyframes fadeInTab {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sceneReferences__tab:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.sceneReferences__tab-icon {
+  font-size: 1.1rem;
+}
+
+/* Expanded panel */
+.sceneReferences__panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 0;
+  overflow: hidden;
+  background: rgba(15, 15, 18, 0.96);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 9999;
+  
+  transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+.sceneReferences__panel.open {
+  max-height: 80vh;
+  padding: 2rem 0;
+  overflow-y: auto;
+}
+
+/* Panel inner content */
+.sceneReferences__panel-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Close button */
+.sceneReferences__close {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.sceneReferences__close-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  cursor: pointer;
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  
+  transition: all 0.2s ease;
+}
+
+.sceneReferences__close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* References heading */
+.sceneReferences__heading {
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* References list */
+.sceneReferences__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+/* Individual reference entry */
+.sceneReferences__entry {
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  padding-left: 2rem;
+  text-indent: -2rem;
+}
+
+.sceneReferences__entry a {
+  color: rgba(180, 200, 255, 0.9);
+  text-decoration: none;
+  word-break: break-all;
+  transition: color 0.2s ease;
+}
+
+.sceneReferences__entry a:hover {
+  color: rgba(200, 220, 255, 1);
+  text-decoration: underline;
+}
+
+/* Scrollbar styling for panel */
+.sceneReferences__panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sceneReferences__panel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sceneReferences__panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.sceneReferences__panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sceneReferences__tab {
+    padding: 0.8rem 1.4rem;
+    font-size: 0.9rem;
+  }
+  
+  .sceneReferences__panel.open {
+    max-height: 85vh;
+  }
+  
+  .sceneReferences__panel-inner {
+    padding: 0 1.2rem;
+  }
+  
+  .sceneReferences__heading {
+    font-size: 1.4rem;
+  }
+  
+  .sceneReferences__entry {
+    font-size: 0.9rem;
+    padding-left: 1.5rem;
+    text-indent: -1.5rem;
+  }
+}
+

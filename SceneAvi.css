@@ -1,0 +1,147 @@
+/* SceneAvi - Avi Schiffmann & Religious Language */
+
+/* Scene container */
+.sceneAvi {
+  position: relative;
+  width: 100vw;
+  min-height: 250vh;
+  overflow: hidden;
+}
+
+/* Fullscreen background image - stays fixed */
+.sceneAvi__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 700;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sceneAvi__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content wrapper - scrolls on top of background */
+.sceneAvi__content {
+  position: relative;
+  z-index: 701;
+  padding-top: 30vh;
+  padding-bottom: 30vh;
+}
+
+/* Individual text block */
+.sceneAvi__block {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Text box styling */
+.sceneAvi__text {
+  max-width: 700px;
+  padding: 2rem 2.5rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: white;
+  text-align: left;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state */
+.sceneAvi__text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state - drifts upward */
+.sceneAvi__text.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Block 3 - text with image */
+.sceneAvi__block--with-image {
+  min-height: 100vh;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Image container - centered below text */
+.sceneAvi__image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s;
+}
+
+/* Visible state */
+.sceneAvi__image-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state */
+.sceneAvi__image-container.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Single image - larger size, analytical pairing */
+.sceneAvi__image {
+  max-width: 600px;
+  width: 90%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .sceneAvi__text {
+    font-size: 1.25rem;
+    padding: 1.5rem 2rem;
+    max-width: 90%;
+  }
+  
+  .sceneAvi__image {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sceneAvi__text {
+    font-size: 1.1rem;
+    padding: 1.2rem 1.5rem;
+    max-width: 95%;
+  }
+  
+  .sceneAvi__image {
+    max-width: 400px;
+  }
+}
+

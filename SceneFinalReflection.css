@@ -1,0 +1,136 @@
+/* SceneFinalReflection - Closing Reflection + Zooming Cross */
+
+/* Scene container */
+.sceneFinalReflection {
+  position: relative;
+  width: 100vw;
+  min-height: 250vh;
+  overflow: hidden;
+}
+
+/* Fullscreen background container - stays fixed */
+.sceneFinalReflection__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1800;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.sceneFinalReflection__background.visible {
+  opacity: 1;
+}
+
+/* Background image - zooms toward the cross */
+.sceneFinalReflection__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: 71% 55%;
+  transition: transform 0.05s ease-out;
+  will-change: transform;
+}
+
+/* Dark overlay for readability - constant opacity */
+.sceneFinalReflection__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+/* Content wrapper - scrolls on top of background */
+.sceneFinalReflection__content {
+  position: relative;
+  z-index: 1801;
+  padding-top: 30vh;
+  padding-bottom: 40vh;
+}
+
+/* Text block container */
+.sceneFinalReflection__block {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Text box styling - calm, conclusive */
+.sceneFinalReflection__text {
+  max-width: 740px;
+  padding: 2.2rem 2.8rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: white;
+  text-align: left;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.sceneFinalReflection__text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sceneFinalReflection__text.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+.sceneFinalReflection__text p {
+  margin: 0;
+}
+
+.sceneFinalReflection__text p + p {
+  margin-top: 1.5rem;
+}
+
+/* Final line - slightly emphasized */
+.sceneFinalReflection__text p:last-child {
+  font-weight: 500;
+  margin-top: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .sceneFinalReflection__text {
+    font-size: 1.1rem;
+    padding: 1.8rem 2.2rem;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sceneFinalReflection__text {
+    font-size: 1rem;
+    padding: 1.5rem 1.8rem;
+    max-width: 95%;
+    line-height: 1.75;
+  }
+  
+  .sceneFinalReflection__block {
+    min-height: 50vh;
+  }
+}
+

@@ -1,0 +1,39 @@
+/* SceneFinal - Final morphing image section */
+/* Scene container */
+.sceneFinal {
+  position: relative;
+  width: 100vw;
+  min-height: 200vh; /* Scrollable space for fade transition */
+  overflow: hidden;
+}
+
+/* Fullscreen background - initial image (1photowow.png) */
+.sceneFinal__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 500; /* Above Scene04 */
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sceneFinal__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Photo overlay - fades in on top of background (photowow.png) */
+.sceneFinal__photo-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 501; /* Above background */
+  opacity: 0;
+  pointer-events: none;
+}

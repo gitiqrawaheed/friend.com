@@ -1,0 +1,212 @@
+/* Scene04 - Image grid with text */
+/* Scene container */
+.scene04 {
+  position: relative;
+  width: 100vw;
+  background-color: #000;
+  overflow: hidden;
+}
+
+/* Section wrapper */
+.scene04__section {
+  position: relative;
+  min-height: 60vh; /* Minimal scroll room */
+  width: 100%;
+}
+
+/* First section - less scroll space needed */
+.scene04__section:first-of-type + .scene04__section {
+  min-height: 100vh;
+}
+
+/* Spacer - forces user to scroll before observer activates */
+.scene04__spacer {
+  height: 10vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Sentinel element - observed by IntersectionObserver */
+.scene04__sentinel {
+  height: 1px;
+  width: 100%;
+  position: relative;
+  background: transparent;
+}
+
+/* Content wrapper */
+.scene04__content {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Black background overlay - covers Scene03 */
+.scene04__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  z-index: 399; /* Above Scene03 */
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease-out;
+}
+
+.scene04__background.visible {
+  opacity: 1;
+}
+
+/* Text boxes - same style as previous scenes */
+.scene04__text {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 401; /* Above background */
+  
+  padding: 1.5rem 2rem;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: white;
+  text-align: center;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  
+  max-width: 700px;
+  
+  /* Hidden / exit state */
+  opacity: 0;
+  transform: translateX(-50%) translateY(calc(-50% - 40px));
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  pointer-events: none;
+}
+
+/* Visible / entry state */
+.scene04__text.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+/* First text positioning */
+.scene04__text--1 {
+  top: 40%;
+}
+
+/* Second text positioning - title above grid, with good spacing */
+.scene04__text--2 {
+  position: relative;
+  top: auto;
+  transform: none;
+  margin-bottom: 2rem;
+}
+
+/* Text within reaction block should not be fixed */
+.scene04__reaction-block .scene04__text {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  opacity: 1;
+}
+
+/* Reaction block - groups text and grid together */
+.scene04__reaction-block {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 400;
+  
+  /* Hidden (default) */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+
+/* Visible */
+.scene04__reaction-block.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit - when visible class is removed, moves upward */
+.scene04__reaction-block:not(.visible) {
+  transform: translateY(-40px);
+}
+
+/* Image grid container - positioned lower with space from title text above */
+.scene04__grid-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 2rem;
+  max-width: 1200px;
+  width: 90%;
+  margin-top: 2rem;
+}
+
+/* Grid images */
+.scene04__grid-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+  aspect-ratio: 3/4;
+  
+  /* Start slightly zoomed out */
+  transform: scale(0.95);
+  transition: transform 0.8s ease-out;
+}
+
+/* Images scale to full size when reaction block is visible */
+.scene04__reaction-block.visible .scene04__grid-image {
+  transform: scale(1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .scene04__grid-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .scene04__text {
+    font-size: 1.2rem;
+    padding: 1.2rem 1.5rem;
+    max-width: 90%;
+  }
+  
+  .scene04__text--1 {
+    top: 35%;
+  }
+  
+  .scene04__text--2 {
+    top: 20%;
+  }
+  
+  .scene04__grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    padding: 1rem;
+    width: 95%;
+    top: 75%;
+  }
+}
+

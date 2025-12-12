@@ -1,0 +1,261 @@
+/* SceneConclusion - Friend or Foe? (Final Scene) */
+
+/* Scene container */
+.sceneConclusion {
+  position: relative;
+  width: 100vw;
+  min-height: 300vh;
+  overflow: hidden;
+}
+
+/* Fullscreen background image - fades in, stays fixed */
+.sceneConclusion__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1700;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.sceneConclusion__background.visible {
+  opacity: 1;
+}
+
+.sceneConclusion__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content wrapper - scrolls on top of background */
+.sceneConclusion__content {
+  position: relative;
+  z-index: 1701;
+  padding-top: 25vh;
+  padding-bottom: 30vh;
+}
+
+/* Individual block - softer spacing */
+.sceneConclusion__block {
+  position: relative;
+  min-height: 38vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.8rem;
+}
+
+/* Heading styling - warm and confident */
+.sceneConclusion__heading {
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  padding: 1.5rem 2.5rem;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  letter-spacing: 0.02em;
+  
+  /* Pink glow effect */
+  box-shadow: 
+    0 0 25px rgba(255, 130, 180, 0.4),
+    0 0 50px rgba(255, 100, 160, 0.25),
+    0 0 80px rgba(255, 80, 140, 0.15);
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.sceneConclusion__heading.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sceneConclusion__heading.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Standard text box styling - softer feel */
+.sceneConclusion__text {
+  max-width: 720px;
+  padding: 2rem 2.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: white;
+  text-align: left;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.sceneConclusion__text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sceneConclusion__text.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+.sceneConclusion__text p {
+  margin: 0;
+}
+
+.sceneConclusion__text p + p {
+  margin-top: 1.4rem;
+}
+
+/* Visual pause / divider block */
+.sceneConclusion__block--pause {
+  min-height: 15vh;
+}
+
+/* Image wrapper - larger than previous scenes */
+.sceneConclusion__image-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.sceneConclusion__image-wrapper.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sceneConclusion__image-wrapper.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Images - larger and playful */
+.sceneConclusion__image {
+  max-width: 600px;
+  width: 90%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Final thesis image - even more prominent */
+.sceneConclusion__image--large {
+  max-width: 680px;
+}
+
+/* Citation styling - smaller, attached */
+.sceneConclusion__citation {
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  padding: 0.8rem 1.2rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  max-width: 600px;
+  line-height: 1.5;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.sceneConclusion__citation.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sceneConclusion__citation.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+.sceneConclusion__citation a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.35);
+  text-underline-offset: 2px;
+  transition: text-decoration-color 0.3s ease;
+}
+
+.sceneConclusion__citation a:hover {
+  text-decoration-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .sceneConclusion__heading {
+    font-size: 1.8rem;
+  }
+  
+  .sceneConclusion__text {
+    font-size: 1.1rem;
+    padding: 1.5rem 2rem;
+    max-width: 90%;
+  }
+  
+  .sceneConclusion__image {
+    max-width: 500px;
+  }
+  
+  .sceneConclusion__image--large {
+    max-width: 560px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sceneConclusion__heading {
+    font-size: 1.5rem;
+    padding: 1.2rem 1.8rem;
+  }
+  
+  .sceneConclusion__text {
+    font-size: 1rem;
+    padding: 1.2rem 1.5rem;
+    max-width: 95%;
+    line-height: 1.7;
+  }
+  
+  .sceneConclusion__block {
+    min-height: 35vh;
+  }
+  
+  .sceneConclusion__image {
+    max-width: 95%;
+  }
+  
+  .sceneConclusion__image--large {
+    max-width: 95%;
+  }
+  
+  .sceneConclusion__citation {
+    font-size: 0.8rem;
+    max-width: 95%;
+  }
+}
+
