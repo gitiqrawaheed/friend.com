@@ -56,10 +56,16 @@
   
   font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
   font-size: 1.6rem;
-  font-weight: 500;
+  font-weight: 700;
   color: white;
   text-align: center;
   letter-spacing: 0.02em;
+  
+  /* Pink glow effect */
+  box-shadow: 
+    0 0 25px rgba(255, 130, 180, 0.4),
+    0 0 50px rgba(255, 100, 160, 0.25),
+    0 0 80px rgba(255, 80, 140, 0.15);
   
   /* Initial hidden state */
   opacity: 0;
