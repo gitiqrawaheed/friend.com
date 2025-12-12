@@ -1,0 +1,287 @@
+/* ScenePrivacy - Privacy Policy & Liability */
+
+/* Scene container */
+.scenePrivacy {
+  position: relative;
+  width: 100vw;
+  min-height: 300vh;
+  overflow: hidden;
+}
+
+/* Fullscreen background image - same as previous scene, stays fixed */
+.scenePrivacy__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1300;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.scenePrivacy__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content wrapper - scrolls on top of background */
+.scenePrivacy__content {
+  position: relative;
+  z-index: 1301;
+  padding-top: 25vh;
+  padding-bottom: 30vh;
+}
+
+/* Individual block - tightened spacing for better flow */
+.scenePrivacy__block {
+  position: relative;
+  min-height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+/* Standard text box styling */
+.scenePrivacy__text {
+  max-width: 700px;
+  padding: 2rem 2.5rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: white;
+  text-align: left;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state */
+.scenePrivacy__text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state - drifts upward */
+.scenePrivacy__text.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Intro text - short, centered */
+.scenePrivacy__text--intro {
+  text-align: center;
+  font-size: 1.3rem;
+  font-style: italic;
+  max-width: 500px;
+}
+
+/* Legal text - dense, heavy */
+.scenePrivacy__text--legal {
+  max-width: 780px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+/* Highlight text - emphasized, tighter, with warning glow */
+.scenePrivacy__text--highlight {
+  max-width: 620px;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.6;
+  background: rgba(0, 0, 0, 0.6);
+  border-left: 3px solid rgba(255, 180, 80, 0.5);
+  padding-left: 2rem;
+  
+  /* Soft amber warning glow - ominous, legal feel */
+  box-shadow: 
+    0 0 25px rgba(255, 175, 50, 0.18),
+    0 0 50px rgba(255, 160, 40, 0.12),
+    0 0 80px rgba(255, 140, 30, 0.06);
+}
+
+/* Footnote - small, quiet */
+.scenePrivacy__text--footnote {
+  max-width: 500px;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1rem 1.5rem;
+}
+
+/* Tighter block spacing for captions/footnotes - feel attached to content above */
+.scenePrivacy__block--tight {
+  min-height: 15vh;
+  margin-top: 0;
+  padding-top: 1rem;
+}
+
+/* Aside - lighter, conversational (no italics) */
+.scenePrivacy__text--aside {
+  font-size: 1.15rem;
+  max-width: 650px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Block before image - tighter bottom spacing */
+.scenePrivacy__block--before-image {
+  min-height: 30vh;
+  margin-bottom: -10vh;
+}
+
+/* Final highlight - closing emphasis */
+.scenePrivacy__text--final {
+  max-width: 650px;
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.6;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.scenePrivacy__text p {
+  margin: 0;
+}
+
+/* Image block - slightly reduced */
+.scenePrivacy__image-block {
+  min-height: 50vh;
+}
+
+.scenePrivacy__image-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scenePrivacy__image-wrapper.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scenePrivacy__image-wrapper.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+.scenePrivacy__image {
+  max-width: 550px;
+  width: 90%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Caption styling */
+.scenePrivacy__caption {
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scenePrivacy__caption.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scenePrivacy__caption.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+.scenePrivacy__caption p {
+  margin: 0;
+}
+
+.scenePrivacy__caption a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.4);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.3s ease;
+}
+
+.scenePrivacy__caption a:hover {
+  text-decoration-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .scenePrivacy__text {
+    font-size: 1.1rem;
+    padding: 1.5rem 2rem;
+    max-width: 90%;
+  }
+  
+  .scenePrivacy__text--highlight {
+    font-size: 1.15rem;
+  }
+  
+  .scenePrivacy__text--final {
+    font-size: 1.2rem;
+  }
+  
+  .scenePrivacy__image {
+    max-width: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .scenePrivacy__text {
+    font-size: 1rem;
+    padding: 1.2rem 1.5rem;
+    max-width: 95%;
+    line-height: 1.6;
+  }
+  
+  .scenePrivacy__text--intro {
+    font-size: 1.1rem;
+  }
+  
+  .scenePrivacy__text--legal {
+    font-size: 0.95rem;
+  }
+  
+  .scenePrivacy__text--highlight {
+    font-size: 1.05rem;
+    padding-left: 1.5rem;
+  }
+  
+  .scenePrivacy__text--final {
+    font-size: 1.1rem;
+  }
+  
+  .scenePrivacy__image {
+    max-width: 95%;
+  }
+}
+

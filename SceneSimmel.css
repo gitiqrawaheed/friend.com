@@ -1,0 +1,154 @@
+/* SceneSimmel - A Friend That's Always There */
+
+/* Scene container */
+.sceneSimmel {
+  position: relative;
+  width: 100vw;
+  min-height: 250vh;
+  overflow: hidden;
+}
+
+/* Fullscreen background image - fades in, stays fixed */
+.sceneSimmel__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1400;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.sceneSimmel__background.visible {
+  opacity: 1;
+}
+
+.sceneSimmel__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content wrapper - scrolls on top of background */
+.sceneSimmel__content {
+  position: relative;
+  z-index: 1401;
+  padding-top: 30vh;
+  padding-bottom: 25vh;
+}
+
+/* Individual block */
+.sceneSimmel__block {
+  position: relative;
+  min-height: 45vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+/* Subheading styling */
+.sceneSimmel__subheading {
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  padding: 1.2rem 2rem;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  letter-spacing: 0.02em;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.sceneSimmel__subheading.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sceneSimmel__subheading.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Standard text box styling */
+.sceneSimmel__text {
+  max-width: 720px;
+  padding: 2rem 2.5rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: white;
+  text-align: left;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Visible state */
+.sceneSimmel__text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Exit state - drifts upward */
+.sceneSimmel__text.exit {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+.sceneSimmel__text p {
+  margin: 0;
+}
+
+.sceneSimmel__text p + p {
+  margin-top: 1.2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .sceneSimmel__subheading {
+    font-size: 1.5rem;
+  }
+  
+  .sceneSimmel__text {
+    font-size: 1.1rem;
+    padding: 1.5rem 2rem;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sceneSimmel__subheading {
+    font-size: 1.3rem;
+    padding: 1rem 1.5rem;
+  }
+  
+  .sceneSimmel__text {
+    font-size: 1rem;
+    padding: 1.2rem 1.5rem;
+    max-width: 95%;
+    line-height: 1.65;
+  }
+  
+  .sceneSimmel__block {
+    min-height: 40vh;
+  }
+}
+

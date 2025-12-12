@@ -66,6 +66,12 @@
   border-radius: 4px;
 }
 
+/* Spy images - larger size */
+.sceneSurveillance__image--spy {
+  max-width: 450px;
+  max-height: 340px;
+}
+
 /* Right side - pinned word list */
 .sceneSurveillance__word-panel {
   width: 280px;
@@ -130,27 +136,27 @@
   max-height: 180px;
 }
 
-/* Interpretive pullquote - editorial, reflective */
+/* Interpretive pullquote - editorial, reflective, centered */
 .sceneSurveillance__pullquote {
   position: fixed;
-  bottom: 8%;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%) translateY(30px);
+  transform: translate(-50%, -50%) translateY(30px);
   z-index: 1102;
   
-  max-width: 580px;
-  padding: 1.8rem 2.2rem;
+  max-width: 720px;
+  padding: 2.5rem 3rem;
   background: rgba(20, 20, 20, 0.85);
   backdrop-filter: blur(16px);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   
   font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.92);
   text-align: left;
-  line-height: 1.7;
+  line-height: 1.75;
   letter-spacing: 0.01em;
   
   opacity: 0;
@@ -160,7 +166,7 @@
 
 .sceneSurveillance__pullquote.visible {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translate(-50%, -50%) translateY(0);
 }
 
 .sceneSurveillance__pullquote p {

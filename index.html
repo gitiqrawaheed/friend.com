@@ -16,6 +16,12 @@
     <link rel="stylesheet" href="SceneWordcloud.css">
     <link rel="stylesheet" href="SceneTheory.css">
     <link rel="stylesheet" href="SceneSurveillance.css">
+    <link rel="stylesheet" href="SceneListening.css">
+    <link rel="stylesheet" href="ScenePrivacy.css">
+    <link rel="stylesheet" href="SceneSimmel.css">
+    <link rel="stylesheet" href="SceneOrsi.css">
+    <link rel="stylesheet" href="SceneIconic.css">
+    <link rel="stylesheet" href="SceneConclusion.css">
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -1422,10 +1428,7 @@
             '/pictures/0097.png'
           ]
           
-          const spyImages = [
-            '/pictures/0083.png',
-            '/pictures/0087.png'
-          ]
+          const spyImages = []
 
           // Progressive image reveal based on scroll
           const surveillanceProgress = Math.min(scrollProgress / 0.6, 1)
@@ -1443,12 +1446,17 @@
             'cult', 'sacred', 'watch', 'listen', 'trust', 'human'
           ]
 
+          // Fade out the scene as we approach the end for smooth transition
+          const sceneOpacity = scrollProgress > 0.9 
+            ? Math.max(0, 1 - (scrollProgress - 0.9) / 0.1)
+            : (isVisible ? 1 : 0)
+
           return (
             <div ref={sceneRef} className="sceneSurveillance">
               {/* Fixed display layer */}
               <div 
                 className="sceneSurveillance__fixed-layer"
-                style={{ opacity: isVisible ? 1 : 0 }}
+                style={{ opacity: sceneOpacity }}
               >
                 {/* Left - Image viewport */}
                 <div className="sceneSurveillance__image-viewport">
@@ -1478,7 +1486,7 @@
                         <img 
                           src={src} 
                           alt={`Spy graffiti ${i + 1}`}
-                          className="sceneSurveillance__image"
+                          className="sceneSurveillance__image sceneSurveillance__image--spy"
                         />
                       </div>
                     ))}
@@ -1511,15 +1519,952 @@
                 </div>
               </div>
 
-              {/* Interpretive text block - appears after image streams */}
+              {/* Interpretive text block - appears after image streams, stays longer */}
               <div 
-                className={`sceneSurveillance__pullquote ${scrollProgress > 0.75 ? 'visible' : ''}`}
+                className={`sceneSurveillance__pullquote ${scrollProgress > 0.55 && scrollProgress < 0.95 ? 'visible' : ''}`}
               >
                 <p>Two heavily repeated words include "surveillance" and "spy," with both pointing to different understandings of being watched. Surveillance implies ongoing monitoring by an authority that is normalized, often framed as passive. Spy implies secrecy and intrusion. In the graffiti responding to the Friend.com ads, the use of such language shows how the device's constant listening is interpreted by the public as threatening. This allows us to segue into Isaac Weiner's work on religion in public space, which shows that conflict emerges when a presence, whether sound or technology, is experienced as imposed and unavoidable.</p>
               </div>
 
               {/* Scroll driver */}
               <div className="sceneSurveillance__scroll-driver" />
+            </div>
+          )
+        }
+
+        function SceneListening() {
+          const [scrollProgress, setScrollProgress] = useState(0)
+          const [subheadingState, setSubheadingState] = useState('hidden')
+          const [textState, setTextState] = useState('hidden')
+          const sceneRef = useRef(null)
+          const subheadingRef = useRef(null)
+          const textRef = useRef(null)
+
+          useEffect(() => {
+            const handleScroll = () => {
+              if (sceneRef.current) {
+                const rect = sceneRef.current.getBoundingClientRect()
+                const windowHeight = window.innerHeight
+                const sceneHeight = rect.height
+                
+                const progress = rect.top < windowHeight
+                  ? Math.max(0, Math.min(1, 
+                      (windowHeight - rect.top) / (windowHeight + sceneHeight)
+                    ))
+                  : 0
+                setScrollProgress(progress)
+              }
+            }
+
+            window.addEventListener('scroll', handleScroll)
+            handleScroll()
+
+            return () => window.removeEventListener('scroll', handleScroll)
+          }, [])
+
+          // IntersectionObserver for elements
+          useEffect(() => {
+            const observerOptions = {
+              threshold: [0, 0.3, 0.7, 1],
+              rootMargin: '-10% 0px -10% 0px'
+            }
+
+            const handleIntersection = (entries, setState) => {
+              entries.forEach(entry => {
+                const ratio = entry.intersectionRatio
+                if (!entry.isIntersecting) {
+                  if (entry.boundingClientRect.top < 0) {
+                    setState('exit')
+                  } else {
+                    setState('hidden')
+                  }
+                } else if (ratio > 0.3) {
+                  setState('visible')
+                } else if (ratio > 0) {
+                  setState('visible')
+                }
+              })
+            }
+
+            const subheadingObserver = new IntersectionObserver(
+              (entries) => handleIntersection(entries, setSubheadingState),
+              observerOptions
+            )
+            const textObserver = new IntersectionObserver(
+              (entries) => handleIntersection(entries, setTextState),
+              observerOptions
+            )
+
+            if (subheadingRef.current) subheadingObserver.observe(subheadingRef.current)
+            if (textRef.current) textObserver.observe(textRef.current)
+
+            return () => {
+              subheadingObserver.disconnect()
+              textObserver.disconnect()
+            }
+          }, [])
+
+          // Background only visible when scene is in viewport
+          const backgroundOpacity = scrollProgress > 0 ? 1 : 0
+
+          return (
+            <div ref={sceneRef} className="sceneListening">
+              {/* Fullscreen background image */}
+              <div 
+                className="sceneListening__background"
+                style={{ opacity: backgroundOpacity }}
+              >
+                <img 
+                  src="/pictures/para1.webp" 
+                  alt="Background"
+                  className="sceneListening__bg-image"
+                />
+              </div>
+
+              {/* Scrolling content */}
+              <div className="sceneListening__content">
+                {/* Subheading */}
+                <div ref={subheadingRef} className="sceneListening__block">
+                  <div className={`sceneListening__subheading ${subheadingState}`}>
+                    A friend that… listens
+                  </div>
+                </div>
+
+                {/* Text block */}
+                <div ref={textRef} className="sceneListening__block">
+                  <div className={`sceneListening__text ${textState}`}>
+                    <p>Weiner's work explains why the pendant's promise of constant listening provoked anxiety- specifically worries regarding technology projection and human development. He argues that sound shapes the boundaries of public intimacy, showing that listening is never passive. Weiner's account of the debate in Hamtramck over the Muslim call to prayer shows how public listening produces tensions around belonging (Weiner 2013, 159), which relates to Friend.com because its constant listening raises the same question- what forms of listening a community will tolerate? When Schiffmann described the pendant as "always listening," he transformed the device into a participant in the governance of private, intimate conversations. Imagine speaking with a close friend in confidence and later discovering that their wearable device had been recording your entire exchange. Does Friend.com expects every user to secure explicit consent in every conversation, or does the company anticipates a gradual shift in norms in which people become accustomed to the idea that their words are being recorded whether they are aware of it or not, and whether they find it acceptable or not? The introduction of new listening practices can quietly reshape the moral expectations of everyday interaction, often before communities have fully realized the changes and adjusted their behaviors accordingly.</p>
+                    <p>Riders interpreted the pendant through a moral framework of intrusion. Weiner shows that the act of listening carries power because it crosses boundaries between personal and public life. The pendant makes these boundaries a very tight rope to balance on, as it comes with a promise of unconditional listening that resembled the attentive ear of a divine figure. Riders rejected this resemblance.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
+        function ScenePrivacy() {
+          const [scrollProgress, setScrollProgress] = useState(0)
+          const [block1State, setBlock1State] = useState('hidden')
+          const [block2State, setBlock2State] = useState('hidden')
+          const [block3State, setBlock3State] = useState('hidden')
+          const [block4State, setBlock4State] = useState('hidden')
+          const [block5State, setBlock5State] = useState('hidden')
+          const [block6State, setBlock6State] = useState('hidden')
+          const [block7State, setBlock7State] = useState('hidden')
+          const [block8State, setBlock8State] = useState('hidden')
+          const [block9State, setBlock9State] = useState('hidden')
+          const [block10State, setBlock10State] = useState('hidden')
+          const [block11State, setBlock11State] = useState('hidden')
+          const [block12State, setBlock12State] = useState('hidden')
+          const sceneRef = useRef(null)
+          const block1Ref = useRef(null)
+          const block2Ref = useRef(null)
+          const block3Ref = useRef(null)
+          const block4Ref = useRef(null)
+          const block5Ref = useRef(null)
+          const block6Ref = useRef(null)
+          const block7Ref = useRef(null)
+          const block8Ref = useRef(null)
+          const block9Ref = useRef(null)
+          const block10Ref = useRef(null)
+          const block11Ref = useRef(null)
+          const block12Ref = useRef(null)
+
+          useEffect(() => {
+            const handleScroll = () => {
+              if (sceneRef.current) {
+                const rect = sceneRef.current.getBoundingClientRect()
+                const windowHeight = window.innerHeight
+                const sceneHeight = rect.height
+                
+                const progress = rect.top < windowHeight
+                  ? Math.max(0, Math.min(1, 
+                      (windowHeight - rect.top) / (windowHeight + sceneHeight)
+                    ))
+                  : 0
+                setScrollProgress(progress)
+              }
+            }
+
+            window.addEventListener('scroll', handleScroll)
+            handleScroll()
+
+            return () => window.removeEventListener('scroll', handleScroll)
+          }, [])
+
+          useEffect(() => {
+            const observerOptions = {
+              threshold: [0, 0.3, 0.7, 1],
+              rootMargin: '-10% 0px -10% 0px'
+            }
+
+            const handleIntersection = (entries, setState) => {
+              entries.forEach(entry => {
+                const ratio = entry.intersectionRatio
+                if (!entry.isIntersecting) {
+                  if (entry.boundingClientRect.top < 0) {
+                    setState('exit')
+                  } else {
+                    setState('hidden')
+                  }
+                } else if (ratio > 0.3) {
+                  setState('visible')
+                } else if (ratio > 0) {
+                  setState('visible')
+                }
+              })
+            }
+
+            const observers = [
+              new IntersectionObserver((e) => handleIntersection(e, setBlock1State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock2State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock3State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock4State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock5State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock6State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock7State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock8State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock9State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock10State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock11State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock12State), observerOptions)
+            ]
+
+            const refs = [block1Ref, block2Ref, block3Ref, block4Ref, block5Ref, block6Ref, block7Ref, block8Ref, block9Ref, block10Ref, block11Ref, block12Ref]
+            refs.forEach((ref, i) => {
+              if (ref.current) observers[i].observe(ref.current)
+            })
+
+            return () => observers.forEach(o => o.disconnect())
+          }, [])
+
+          const backgroundOpacity = scrollProgress > 0 ? 1 : 0
+
+          return (
+            <div ref={sceneRef} className="scenePrivacy">
+              {/* Same background as SceneListening */}
+              <div 
+                className="scenePrivacy__background"
+                style={{ opacity: backgroundOpacity }}
+              >
+                <img 
+                  src="/pictures/para1.webp" 
+                  alt="Background"
+                  className="scenePrivacy__bg-image"
+                />
+              </div>
+
+              <div className="scenePrivacy__content">
+                {/* Block 1 - Intro */}
+                <div ref={block1Ref} className="scenePrivacy__block">
+                  <div className={`scenePrivacy__text scenePrivacy__text--intro ${block1State}`}>
+                    <p>Looking into the company's privacy policy…</p>
+                  </div>
+                </div>
+
+                {/* Block 2 - Legal paragraph */}
+                <div ref={block2Ref} className="scenePrivacy__block">
+                  <div className={`scenePrivacy__text scenePrivacy__text--legal ${block2State}`}>
+                    <p>By using the Services, you understand that the Device is passively recording your surroundings, including video and audio content that may contain personal information that is inappropriate, illegal, or unethical to collect. Privacy and video surveillance laws in your jurisdiction may apply to your use of Our products and Services. You are solely responsible for ensuring that you comply with all applicable laws when you use our products or Services. Capturing, recording or sharing video or audio content that involves other people, or capturing other people's facial feature information, may unlawfully affect their privacy rights. Friend will endeavor to filter inappropriate content out of its data collection, but You agree that Friend will not be held liable in any civil or criminal legal action that may arise from the content collected from the monitoring and recording.</p>
+                  </div>
+                </div>
+
+                {/* Block 3 - Highlight 1 */}
+                <div ref={block3Ref} className="scenePrivacy__block">
+                  <div className={`scenePrivacy__text scenePrivacy__text--highlight ${block3State}`}>
+                    <p>"By using the Services, you understand that the Device is passively recording your surroundings, including video and audio content that may contain personal information that is inappropriate, illegal, or unethical to collect."</p>
+                  </div>
+                </div>
+
+                {/* Block 4 - Highlight 2 */}
+                <div ref={block4Ref} className="scenePrivacy__block">
+                  <div className={`scenePrivacy__text scenePrivacy__text--highlight ${block4State}`}>
+                    <p>"Friend will endeavor to filter inappropriate content out of its data collection, but You agree that Friend will not be held liable in any civil or criminal legal action that may arise from the content collected from the monitoring and recording."</p>
+                  </div>
+                </div>
+
+                {/* Block 5 - Footnote */}
+                <div ref={block5Ref} className="scenePrivacy__block scenePrivacy__block--tight">
+                  <div className={`scenePrivacy__text scenePrivacy__text--footnote ${block5State}`}>
+                    <p>This text is from the Friend.com privacy policy, available at friend.com.</p>
+                  </div>
+                </div>
+
+                {/* Block 6 - Interpretive paragraph */}
+                <div ref={block6Ref} className="scenePrivacy__block">
+                  <div className={`scenePrivacy__text ${block6State}`}>
+                    <p>The company expects the user to claim full responsibility for any legal repercussions that may come with the device's usage. It is your job to let everyone in your surrounding area know that they are being recorded and used for training purposes. It also expects the user to be okay with their lives being used to develop the technology further.</p>
+                  </div>
+                </div>
+
+                {/* Block 7 - Reflective aside */}
+                <div ref={block7Ref} className="scenePrivacy__block scenePrivacy__block--before-image">
+                  <div className={`scenePrivacy__text scenePrivacy__text--aside ${block7State}`}>
+                    <p>I am not a ludite, but suddenly this user agreement makes me feel like I am personally liable to let all of New York know I'm not far from a cop. And honestly, if this thing is recording every moment of my life, at what point in the night do I politely remove it so it does not critique my dating choices?</p>
+                  </div>
+                </div>
+
+                {/* Block 8 - Image */}
+                <div ref={block8Ref} className="scenePrivacy__block scenePrivacy__image-block">
+                  <div className={`scenePrivacy__image-wrapper ${block8State}`}>
+                    <img 
+                      src="/pictures/photo from friend.com official trailer.png" 
+                      alt="Screengrab from Friend Reveal Trailer"
+                      className="scenePrivacy__image"
+                    />
+                  </div>
+                </div>
+
+                {/* Block 9 - Caption */}
+                <div ref={block9Ref} className="scenePrivacy__block scenePrivacy__block--tight">
+                  <div className={`scenePrivacy__caption ${block9State}`}>
+                    <p>Screengrab captured from the <a href="https://www.youtube.com/watch?v=O_Q1hoEhfk4" target="_blank" rel="noopener noreferrer">Friend Reveal Trailer</a></p>
+                  </div>
+                </div>
+
+                {/* Block 10 - Weiner connection */}
+                <div ref={block10Ref} className="scenePrivacy__block">
+                  <div className={`scenePrivacy__text ${block10State}`}>
+                    <p>As expanded on by Weiner, this allows us to see how communities also negotiate what kinds of sound or listening belong in public space. The Friend.com campaign introduced a new form of undercover listening, and graffiti revealed that riders did not authorize this presence, labeling it as invasive and spiritually inappropriate. When a device claims to be "always listening," it enters the moral and political space of who gets to listen, who must be listened to, and who has authority over intimacy, which in this case, is a tech founder.</p>
+                  </div>
+                </div>
+
+                {/* Block 11 - Short paragraph */}
+                <div ref={block11Ref} className="scenePrivacy__block">
+                  <div className={`scenePrivacy__text ${block11State}`}>
+                    <p>New Yorkers reacted strongly to the idea of an AI pendant that listens all the time.</p>
+                  </div>
+                </div>
+
+                {/* Block 12 - Final highlight */}
+                <div ref={block12Ref} className="scenePrivacy__block">
+                  <div className={`scenePrivacy__text scenePrivacy__text--final ${block12State}`}>
+                    <p>Their graffiti "spyware," "listening demon" (NYC Friends Graffiti Archive 2025) shows that listening feels dangerous to the safety of New Yorkers when it is not chosen.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
+        function SceneSimmel() {
+          const [scrollProgress, setScrollProgress] = useState(0)
+          const [subheadingState, setSubheadingState] = useState('hidden')
+          const [block1State, setBlock1State] = useState('hidden')
+          const [block2State, setBlock2State] = useState('hidden')
+          const [block3State, setBlock3State] = useState('hidden')
+          const sceneRef = useRef(null)
+          const subheadingRef = useRef(null)
+          const block1Ref = useRef(null)
+          const block2Ref = useRef(null)
+          const block3Ref = useRef(null)
+
+          useEffect(() => {
+            const handleScroll = () => {
+              if (sceneRef.current) {
+                const rect = sceneRef.current.getBoundingClientRect()
+                const windowHeight = window.innerHeight
+                const sceneHeight = rect.height
+                
+                const progress = rect.top < windowHeight
+                  ? Math.max(0, Math.min(1, 
+                      (windowHeight - rect.top) / (windowHeight + sceneHeight)
+                    ))
+                  : 0
+                setScrollProgress(progress)
+              }
+            }
+
+            window.addEventListener('scroll', handleScroll)
+            handleScroll()
+
+            return () => window.removeEventListener('scroll', handleScroll)
+          }, [])
+
+          useEffect(() => {
+            const observerOptions = {
+              threshold: [0, 0.3, 0.7, 1],
+              rootMargin: '-10% 0px -10% 0px'
+            }
+
+            const handleIntersection = (entries, setState) => {
+              entries.forEach(entry => {
+                const ratio = entry.intersectionRatio
+                if (!entry.isIntersecting) {
+                  if (entry.boundingClientRect.top < 0) {
+                    setState('exit')
+                  } else {
+                    setState('hidden')
+                  }
+                } else if (ratio > 0.3) {
+                  setState('visible')
+                } else if (ratio > 0) {
+                  setState('visible')
+                }
+              })
+            }
+
+            const observers = [
+              new IntersectionObserver((e) => handleIntersection(e, setSubheadingState), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock1State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock2State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock3State), observerOptions)
+            ]
+
+            const refs = [subheadingRef, block1Ref, block2Ref, block3Ref]
+            refs.forEach((ref, i) => {
+              if (ref.current) observers[i].observe(ref.current)
+            })
+
+            return () => observers.forEach(o => o.disconnect())
+          }, [])
+
+          const backgroundVisible = scrollProgress > 0
+
+          return (
+            <div ref={sceneRef} className="sceneSimmel">
+              {/* Fullscreen background image */}
+              <div className={`sceneSimmel__background ${backgroundVisible ? 'visible' : ''}`}>
+                <img 
+                  src="/pictures/para2.jpg" 
+                  alt="Background"
+                  className="sceneSimmel__bg-image"
+                />
+              </div>
+
+              <div className="sceneSimmel__content">
+                {/* Subheading */}
+                <div ref={subheadingRef} className="sceneSimmel__block">
+                  <div className={`sceneSimmel__subheading ${subheadingState}`}>
+                    A friend thats… always there
+                  </div>
+                </div>
+
+                {/* Block 1 */}
+                <div ref={block1Ref} className="sceneSimmel__block">
+                  <div className={`sceneSimmel__text ${block1State}`}>
+                    <p>Simmel's writing allows for an analysis of how this campaign targeted emotional vulnerability, as well as why riders resisted these efforts. Simmel argues that life in the metropolis produces both sensory overload and emotional isolation. Residents defend their individuality by withdrawing from affective claims made by strangers (Simmel 1950, 410). The pendant, a stranger, promised an escape from emotional isolation, yet it appeared as an artificial stranger demanding intimacy. Especially for the company's largest rollout being in New York City, described as a "takeover," the intentions behind the ad's placement are that the New York audience is one that may be particularly more lonely when in such a population-dense, large city (CNN Business 2024).</p>
+                  </div>
+                </div>
+
+                {/* Block 2 */}
+                <div ref={block2Ref} className="sceneSimmel__block">
+                  <div className={`sceneSimmel__text ${block2State}`}>
+                    <p>Schiffmann described the device as a companion who "never leaves" (CNN Business 2024). This description directly addressed the loneliness that Simmel identifies. However, Simmel also suggests that metropolitan individuality makes residents cautious of unsolicited or even phony, malicious emotional engagement. I saw this caution in the graffiti. Riders wrote "stay out of my head," "fake intimacy," and "ai cannot care" (NYC Friends Graffiti Archive 2024). Simmel's argument is reflected in how residents protect the interiority of their lives by rejecting the product and what the brand stands for.</p>
+                  </div>
+                </div>
+
+                {/* Block 3 */}
+                <div ref={block3Ref} className="sceneSimmel__block">
+                  <div className={`sceneSimmel__text ${block3State}`}>
+                    <p>The Friend.com campaign attempted to convert urban loneliness into a way to make money through technological opportunity. Riders interpreted this attempt as emotional manipulation and exploitation of vulnerable New Yorkers. Urban residents navigate relationships through selective emotional boundaries. An AI pendant violates these boundaries by presenting itself as a form of unconditional care. Riders refused its claim to companionship because it threatened their autonomy to choose who they let in and keep out of their lives. Simmel explains why people can oftentimes resist emotional closeness in public settings. Emotional autonomy becomes a survival mechanism in a crowded environment. Friend.com offered constant emotional availability, but in a city where people constantly defend their inner space, a device promising unconditional intimacy feels intrusive rather than comforting in any way.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
+        function SceneOrsi() {
+          const [scrollProgress, setScrollProgress] = useState(0)
+          const [subheadingState, setSubheadingState] = useState('hidden')
+          const [block1State, setBlock1State] = useState('hidden')
+          const [block2State, setBlock2State] = useState('hidden')
+          const [img1State, setImg1State] = useState('hidden')
+          const [img2State, setImg2State] = useState('hidden')
+          const [block3State, setBlock3State] = useState('hidden')
+          const [img3State, setImg3State] = useState('hidden')
+          const [img4State, setImg4State] = useState('hidden')
+          const sceneRef = useRef(null)
+          const subheadingRef = useRef(null)
+          const block1Ref = useRef(null)
+          const block2Ref = useRef(null)
+          const img1Ref = useRef(null)
+          const img2Ref = useRef(null)
+          const block3Ref = useRef(null)
+          const img3Ref = useRef(null)
+          const img4Ref = useRef(null)
+
+          useEffect(() => {
+            const handleScroll = () => {
+              if (sceneRef.current) {
+                const rect = sceneRef.current.getBoundingClientRect()
+                const windowHeight = window.innerHeight
+                const sceneHeight = rect.height
+                
+                const progress = rect.top < windowHeight
+                  ? Math.max(0, Math.min(1, 
+                      (windowHeight - rect.top) / (windowHeight + sceneHeight)
+                    ))
+                  : 0
+                setScrollProgress(progress)
+              }
+            }
+
+            window.addEventListener('scroll', handleScroll)
+            handleScroll()
+
+            return () => window.removeEventListener('scroll', handleScroll)
+          }, [])
+
+          useEffect(() => {
+            const observerOptions = {
+              threshold: [0, 0.3, 0.7, 1],
+              rootMargin: '-10% 0px -10% 0px'
+            }
+
+            const handleIntersection = (entries, setState) => {
+              entries.forEach(entry => {
+                const ratio = entry.intersectionRatio
+                if (!entry.isIntersecting) {
+                  if (entry.boundingClientRect.top < 0) {
+                    setState('exit')
+                  } else {
+                    setState('hidden')
+                  }
+                } else if (ratio > 0.3) {
+                  setState('visible')
+                } else if (ratio > 0) {
+                  setState('visible')
+                }
+              })
+            }
+
+            const observers = [
+              new IntersectionObserver((e) => handleIntersection(e, setSubheadingState), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock1State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock2State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setImg1State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setImg2State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock3State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setImg3State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setImg4State), observerOptions)
+            ]
+
+            const refs = [subheadingRef, block1Ref, block2Ref, img1Ref, img2Ref, block3Ref, img3Ref, img4Ref]
+            refs.forEach((ref, i) => {
+              if (ref.current) observers[i].observe(ref.current)
+            })
+
+            return () => observers.forEach(o => o.disconnect())
+          }, [])
+
+          const backgroundVisible = scrollProgress > 0
+
+          return (
+            <div ref={sceneRef} className="sceneOrsi">
+              {/* Fullscreen background - consistent with recent scenes */}
+              <div className={`sceneOrsi__background ${backgroundVisible ? 'visible' : ''}`}>
+                <img 
+                  src="/pictures/para3.webp" 
+                  alt="Background"
+                  className="sceneOrsi__bg-image"
+                />
+              </div>
+
+              <div className="sceneOrsi__content">
+                {/* Block 1 - Subheading + Paragraph */}
+                <div ref={subheadingRef} className="sceneOrsi__block">
+                  <div className={`sceneOrsi__subheading ${subheadingState}`}>
+                    A friend that…demands attention
+                  </div>
+                </div>
+
+                <div ref={block1Ref} className="sceneOrsi__block">
+                  <div className={`sceneOrsi__text ${block1State}`}>
+                    <p>Orsi describes how religious presence in cities emerges through encounters that disturb the already established boundaries. He argues that urban religion is the negotiation of presence in shared spaces, not doctrine. He calls these interactions sensational forms, which provoke engagement through visual, emotional, or physical demands (Orsi 1999). One of Orsi's clearest examples is the street feste in Italian Harlem, where large statues of saints were carried through crowded city blocks.</p>
+                  </div>
+                </div>
+
+                {/* Block 2 */}
+                <div ref={block2Ref} className="sceneOrsi__block">
+                  <div className={`sceneOrsi__text ${block2State}`}>
+                    <p>These statues filled the streets with music and movement through the procession. Stopping, watching, responding, and even arguing were all results of the spectacle. Catholics and non-catholics alike all had varying emotions, as some felt pride, some annoyance, some fear. (Orsi 1999)</p>
+                  </div>
+                </div>
+
+                {/* Rolling Image Block 1 - Italian Harlem Image 1 */}
+                <div ref={img1Ref} className="sceneOrsi__block sceneOrsi__image-block">
+                  <div className={`sceneOrsi__image-wrapper ${img1State}`}>
+                    <img 
+                      src="/pictures/italian harlem 1.png" 
+                      alt="Italian Harlem street feste"
+                      className="sceneOrsi__image"
+                    />
+                    <div className="sceneOrsi__image-text">
+                      <p>Riders sensed the campaign as a form of sacred claim-making. Orsi's work explains that the city is a place where people negotiate these claims. Riders did not accept the pendant's attempt to normalize a false God, a false friend, or whatever else it was interpreted as, contesting it through defacement. Cities are full of small encounters from shrines, murals, rituals, street processions, and all sorts of other things that onlookers may find bizarre.</p>
+                    </div>
+                    <div className="sceneOrsi__caption">
+                      Screengrabs captured from Instagram.
+                    </div>
+                  </div>
+                </div>
+
+                {/* Rolling Image Block 1 - Italian Harlem Image 2 */}
+                <div ref={img2Ref} className="sceneOrsi__block sceneOrsi__image-block">
+                  <div className={`sceneOrsi__image-wrapper ${img2State}`}>
+                    <img 
+                      src="/pictures/italian harlem 2.png" 
+                      alt="Italian Harlem street feste"
+                      className="sceneOrsi__image"
+                    />
+                    <div className="sceneOrsi__image-text">
+                      <p>Riders sensed the campaign as a form of sacred claim-making. Orsi's work explains that the city is a place where people negotiate these claims. Riders did not accept the pendant's attempt to normalize a false God, a false friend, or whatever else it was interpreted as, contesting it through defacement. Cities are full of small encounters from shrines, murals, rituals, street processions, and all sorts of other things that onlookers may find bizarre.</p>
+                    </div>
+                    <div className="sceneOrsi__caption">
+                      Screengrabs captured from Instagram.
+                    </div>
+                  </div>
+                </div>
+
+                {/* Block 3 - Merged comparison paragraph */}
+                <div ref={block3Ref} className="sceneOrsi__block">
+                  <div className={`sceneOrsi__text ${block3State}`}>
+                    <p>Friend.com ads in the subway, unlike a Hare Krishna chant or a Falun Dafa stand, were hard to ignore, despite at the end of the day being an inanimate sheet. And so New Yorkers wrote over them, rejecting their presence in the shared space they use to navigate and commute within the city they call home.</p>
+                  </div>
+                </div>
+
+                {/* Rolling Image Block 2 - Hare Krishna */}
+                <div ref={img3Ref} className="sceneOrsi__block sceneOrsi__image-block">
+                  <div className={`sceneOrsi__image-wrapper ${img3State}`}>
+                    <img 
+                      src="/pictures/hare krishna.jpg" 
+                      alt="Hare Krishna at Times Square Subway"
+                      className="sceneOrsi__image"
+                    />
+                    <div className="sceneOrsi__caption">
+                      Rama Raya Prabhu. 2013. Rama Raya Prabhu Chants Hare Krishna at Times Square Subway Station. YouTube video, 3:18. Posted June 15, 2013. <a href="https://www.youtube.com/watch?v=3LQ0dTABano" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=3LQ0dTABano</a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Rolling Image Block 2 - Falun Dafa */}
+                <div ref={img4Ref} className="sceneOrsi__block sceneOrsi__image-block">
+                  <div className={`sceneOrsi__image-wrapper ${img4State}`}>
+                    <img 
+                      src="/pictures/falun dafa.webp" 
+                      alt="Falun Dafa Club at Columbia"
+                      className="sceneOrsi__image"
+                    />
+                    <div className="sceneOrsi__caption">
+                      "Falun Dafa Club at Columbia." ezframecompany.com. Accessed December 11, 2025. <a href="https://ezframecompany.com/blogs/spotlight/falun-dafa-club-at-columbia?srsltid=AfmBOoplTYulnX2q9kmM9eT2V2OrRvBQAgL6Yh6mf4TeA1_iH01_G2Hs" target="_blank" rel="noopener noreferrer">https://ezframecompany.com/blogs/spotlight/falun-dafa-club-at-columbia</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
+        function SceneIconic() {
+          const [scrollProgress, setScrollProgress] = useState(0)
+          const [subheadingState, setSubheadingState] = useState('hidden')
+          const [block1State, setBlock1State] = useState('hidden')
+          const [block2State, setBlock2State] = useState('hidden')
+          const [block3State, setBlock3State] = useState('hidden')
+          const [block4State, setBlock4State] = useState('hidden')
+          const sceneRef = useRef(null)
+          const subheadingRef = useRef(null)
+          const block1Ref = useRef(null)
+          const block2Ref = useRef(null)
+          const block3Ref = useRef(null)
+          const block4Ref = useRef(null)
+
+          useEffect(() => {
+            const handleScroll = () => {
+              if (sceneRef.current) {
+                const rect = sceneRef.current.getBoundingClientRect()
+                const windowHeight = window.innerHeight
+                const sceneHeight = rect.height
+                
+                const progress = rect.top < windowHeight
+                  ? Math.max(0, Math.min(1, 
+                      (windowHeight - rect.top) / (windowHeight + sceneHeight)
+                    ))
+                  : 0
+                setScrollProgress(progress)
+              }
+            }
+
+            window.addEventListener('scroll', handleScroll)
+            handleScroll()
+
+            return () => window.removeEventListener('scroll', handleScroll)
+          }, [])
+
+          useEffect(() => {
+            const observerOptions = {
+              threshold: [0, 0.3, 0.7, 1],
+              rootMargin: '-10% 0px -10% 0px'
+            }
+
+            const handleIntersection = (entries, setState) => {
+              entries.forEach(entry => {
+                const ratio = entry.intersectionRatio
+                if (!entry.isIntersecting) {
+                  if (entry.boundingClientRect.top < 0) {
+                    setState('exit')
+                  } else {
+                    setState('hidden')
+                  }
+                } else if (ratio > 0.3) {
+                  setState('visible')
+                } else if (ratio > 0) {
+                  setState('visible')
+                }
+              })
+            }
+
+            const observers = [
+              new IntersectionObserver((e) => handleIntersection(e, setSubheadingState), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock1State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock2State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock3State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock4State), observerOptions)
+            ]
+
+            const refs = [subheadingRef, block1Ref, block2Ref, block3Ref, block4Ref]
+            refs.forEach((ref, i) => {
+              if (ref.current) observers[i].observe(ref.current)
+            })
+
+            return () => observers.forEach(o => o.disconnect())
+          }, [])
+
+          const backgroundVisible = scrollProgress > 0
+
+          return (
+            <div ref={sceneRef} className="sceneIconic">
+              {/* Fullscreen background image */}
+              <div className={`sceneIconic__background ${backgroundVisible ? 'visible' : ''}`}>
+                <img 
+                  src="/pictures/para4.jpg" 
+                  alt="Background"
+                  className="sceneIconic__bg-image"
+                />
+              </div>
+
+              <div className="sceneIconic__content">
+                {/* Subheading */}
+                <div ref={subheadingRef} className="sceneIconic__block">
+                  <div className={`sceneIconic__subheading ${subheadingState}`}>
+                    A friend thats… iconic
+                  </div>
+                </div>
+
+                {/* Block 1 */}
+                <div ref={block1Ref} className="sceneIconic__block">
+                  <div className={`sceneIconic__text ${block1State}`}>
+                    <p>Petro's analysis of Ray Navarro draws connections to how graffiti can be used as a form of visual resistance. Petro shows how Navarro used images of religious figures to critique authority structures. In addition, another major goal was to mobilize political anger amongst the people (Petro 2017, 995). Navarro's work demonstrates that the manipulation of public images, like Jesus, can function as a critique of institutional power.</p>
+                  </div>
+                </div>
+
+                {/* Block 2 */}
+                <div ref={block2Ref} className="sceneIconic__block">
+                  <div className={`sceneIconic__text ${block2State}`}>
+                    <p>Riders acted as secular iconoclasts. They destroyed the symbolic authority of the ads by writing over them. They rejected the pendant's claim to emotional or spiritual authority. Durkheim's concept of collective moral regulation helps clarify this dynamic. Durkheim argues that communities enforce boundaries around what is considered sacred or profane. The graffiti expressed a community judgment that the pendant belonged to the profane. People use visual protest to reclaim power and challenge institutions that present themselves as deciders of what is moral and what isn't.</p>
+                  </div>
+                </div>
+
+                {/* Block 3 */}
+                <div ref={block3Ref} className="sceneIconic__block">
+                  <div className={`sceneIconic__text ${block3State}`}>
+                    <p>When it came to Friend.com's symbolic authority, the ads presented the pendant as a source of emotional truth, a solution to loneliness in a big city. The graffiti rejected that message, just as Navarro's Jesus did, both showing examples of the destruction of an image representing something seen as false or dangerous.</p>
+                  </div>
+                </div>
+
+                {/* Block 4 */}
+                <div ref={block4Ref} className="sceneIconic__block">
+                  <div className={`sceneIconic__text ${block4State}`}>
+                    <p>In each case, the target is not the symbol itself. Riders are not rejecting technology as a whole, just as Navarro was not rejecting Jesus. What they resist is the way technology, in the case of Friend.com, is positioned as an intimate companion while enabling surveillance and making a mockery of human connection, and the way Jesus, as used by Navarro, is used to fight against the the way the Catholic Church used Jesus to justify policies that stigmatized people with AIDS and refused to support life-saving education and medical care. Opposition is directed at the misuse of powerful symbols, not the symbols themselves.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
+        function SceneConclusion() {
+          const [scrollProgress, setScrollProgress] = useState(0)
+          const [headingState, setHeadingState] = useState('hidden')
+          const [block1State, setBlock1State] = useState('hidden')
+          const [img1State, setImg1State] = useState('hidden')
+          const [block2State, setBlock2State] = useState('hidden')
+          const [block3State, setBlock3State] = useState('hidden')
+          const [img2State, setImg2State] = useState('hidden')
+          const [block4State, setBlock4State] = useState('hidden')
+          const [img3State, setImg3State] = useState('hidden')
+          const [citationState, setCitationState] = useState('hidden')
+          const sceneRef = useRef(null)
+          const headingRef = useRef(null)
+          const block1Ref = useRef(null)
+          const img1Ref = useRef(null)
+          const block2Ref = useRef(null)
+          const block3Ref = useRef(null)
+          const img2Ref = useRef(null)
+          const block4Ref = useRef(null)
+          const img3Ref = useRef(null)
+          const citationRef = useRef(null)
+
+          useEffect(() => {
+            const handleScroll = () => {
+              if (sceneRef.current) {
+                const rect = sceneRef.current.getBoundingClientRect()
+                const windowHeight = window.innerHeight
+                const sceneHeight = rect.height
+                
+                const progress = rect.top < windowHeight
+                  ? Math.max(0, Math.min(1, 
+                      (windowHeight - rect.top) / (windowHeight + sceneHeight)
+                    ))
+                  : 0
+                setScrollProgress(progress)
+              }
+            }
+
+            window.addEventListener('scroll', handleScroll)
+            handleScroll()
+
+            return () => window.removeEventListener('scroll', handleScroll)
+          }, [])
+
+          useEffect(() => {
+            const observerOptions = {
+              threshold: [0, 0.3, 0.7, 1],
+              rootMargin: '-10% 0px -10% 0px'
+            }
+
+            const handleIntersection = (entries, setState) => {
+              entries.forEach(entry => {
+                const ratio = entry.intersectionRatio
+                if (!entry.isIntersecting) {
+                  if (entry.boundingClientRect.top < 0) {
+                    setState('exit')
+                  } else {
+                    setState('hidden')
+                  }
+                } else if (ratio > 0.3) {
+                  setState('visible')
+                } else if (ratio > 0) {
+                  setState('visible')
+                }
+              })
+            }
+
+            const observers = [
+              new IntersectionObserver((e) => handleIntersection(e, setHeadingState), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock1State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setImg1State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock2State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock3State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setImg2State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setBlock4State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setImg3State), observerOptions),
+              new IntersectionObserver((e) => handleIntersection(e, setCitationState), observerOptions)
+            ]
+
+            const refs = [headingRef, block1Ref, img1Ref, block2Ref, block3Ref, img2Ref, block4Ref, img3Ref, citationRef]
+            refs.forEach((ref, i) => {
+              if (ref.current) observers[i].observe(ref.current)
+            })
+
+            return () => observers.forEach(o => o.disconnect())
+          }, [])
+
+          const backgroundVisible = scrollProgress > 0
+
+          return (
+            <div ref={sceneRef} className="sceneConclusion">
+              {/* Fullscreen background image */}
+              <div className={`sceneConclusion__background ${backgroundVisible ? 'visible' : ''}`}>
+                <img 
+                  src="/pictures/lady.webp" 
+                  alt="Background"
+                  className="sceneConclusion__bg-image"
+                />
+              </div>
+
+              <div className="sceneConclusion__content">
+                {/* Block 1 - Heading */}
+                <div ref={headingRef} className="sceneConclusion__block">
+                  <div className={`sceneConclusion__heading ${headingState}`}>
+                    Conclusion: Friend or Foe?
+                  </div>
+                </div>
+
+                {/* Block 2 - Text Block */}
+                <div ref={block1Ref} className="sceneConclusion__block">
+                  <div className={`sceneConclusion__text ${block1State}`}>
+                    <p>At 59th Street- Columbus Circle, I saw stickers that linked to boycott campaigns against artificial intelligence. These stickers confirmed that the reactions to Friend.com were not isolated to this one endeavor alone. The linked website, https://boycottai.noblogs.org/, reflected broader conversations being held on the moral boundaries being pushed by technological influence. Graffiti, website stickers,</p>
+                  </div>
+                </div>
+
+                {/* Image - boycott sticker */}
+                <div ref={img1Ref} className="sceneConclusion__block">
+                  <div className={`sceneConclusion__image-wrapper ${img1State}`}>
+                    <img 
+                      src="/pictures/boycottsticker.png" 
+                      alt="Boycott AI sticker"
+                      className="sceneConclusion__image"
+                    />
+                  </div>
+                </div>
+
+                {/* Block 3 - Text Continuation */}
+                <div ref={block2Ref} className="sceneConclusion__block">
+                  <div className={`sceneConclusion__text ${block2State}`}>
+                    <p>And the very archive from which I harness this data revealed a collective ethic embedded in the environment of the subway.</p>
+                  </div>
+                </div>
+
+                {/* Block 4 - Visual Pause */}
+                <div className="sceneConclusion__block sceneConclusion__block--pause"></div>
+
+                {/* Block 5 - Text Block */}
+                <div ref={block3Ref} className="sceneConclusion__block">
+                  <div className={`sceneConclusion__text ${block3State}`}>
+                    <p>Friend.com represents the underlying existence of religious meaning, a never-ending presence in urban life. Interpretive frameworks shaped by ambient faith, anger towards tech-bubble surveillance, urban loneliness, and how far in the sacred is too far were all ways in which riders formed their thoughts on the new device.</p>
+                    <p>NYC doesn't reject God or religion, but we did see a rejection of the pendant's attempt to commercialize and simulate sacred qualities. I am proud of my city for defending the value and authenticity of human emotional life, as well as being willing to fight back against threats to the moral integrity of shared public space.</p>
+                  </div>
+                </div>
+
+                {/* Image - protest tweet */}
+                <div ref={img2Ref} className="sceneConclusion__block">
+                  <div className={`sceneConclusion__image-wrapper ${img2State}`}>
+                    <img 
+                      src="/pictures/protest tweet.png" 
+                      alt="Protest tweet"
+                      className="sceneConclusion__image sceneConclusion__image--large"
+                    />
+                  </div>
+                </div>
+
+                {/* Block 6 - Text Block */}
+                <div ref={block4Ref} className="sceneConclusion__block">
+                  <div className={`sceneConclusion__text ${block4State}`}>
+                    <p>When Schiffmann compared the pendant to "talking to God," he amplified his interpretation of what he offered the world.</p>
+                    <p>Riders responded by denying the pendant's right to occupy a sacred position, one they have reserved for what they recognize as genuinely sacred, whether their icon is Jesus or Jay-Z.</p>
+                  </div>
+                </div>
+
+                {/* Block 7 - Final Image */}
+                <div ref={img3Ref} className="sceneConclusion__block">
+                  <div className={`sceneConclusion__image-wrapper ${img3State}`}>
+                    <img 
+                      src="/pictures/jay z and jesus.jpeg" 
+                      alt="Jay-Z standing in front of statue"
+                      className="sceneConclusion__image sceneConclusion__image--large"
+                    />
+                  </div>
+                </div>
+
+                {/* Block 8 - Image Citation */}
+                <div ref={citationRef} className="sceneConclusion__block">
+                  <div className={`sceneConclusion__citation ${citationState}`}>
+                    JAY-Z Daily (@JAY_Z_Daily). 2020. "Photo of Jay-Z standing in front of statue" (post and image). X, March 30, 2020. <a href="https://x.com/JAY_Z_Daily/status/1245072868813279236/photo/1" target="_blank" rel="noopener noreferrer">https://x.com/JAY_Z_Daily/status/1245072868813279236/photo/1</a>
+                  </div>
+                </div>
+              </div>
             </div>
           )
         }
@@ -1538,6 +2483,12 @@
               <SceneWordcloud />
               <SceneTheory />
               <SceneSurveillance />
+              <SceneListening />
+              <ScenePrivacy />
+              <SceneSimmel />
+              <SceneOrsi />
+              <SceneIconic />
+              <SceneConclusion />
             </>
           )
         }
