@@ -4,34 +4,589 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>friend.com</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="Scene01.css">
+    <link rel="stylesheet" href="Scene02.css">
+    <link rel="stylesheet" href="Scene03.css">
+    <link rel="stylesheet" href="Scene04.css">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
-    <header>
-        <h1>friend.com</h1>
-    </header>
-    
-    <main>
-        <section class="wordcloud-section">
-            <h2>Word Cloud</h2>
-            <div class="wordcloud-container">
-                <img src="graffiti_wordcloud.png" alt="Graffiti Word Cloud" class="wordcloud-image">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        function Scene01() {
+          const [scrollProgress, setScrollProgress] = useState(0)
+          const [text1Visible, setText1Visible] = useState(false)
+          const [text2Visible, setText2Visible] = useState(false)
+          const [text3Visible, setText3Visible] = useState(false)
+          const [text4Visible, setText4Visible] = useState(false)
+          const sceneRef = useRef(null)
+
+          useEffect(() => {
+            const handleScroll = () => {
+              if (sceneRef.current) {
+                const rect = sceneRef.current.getBoundingClientRect()
+                const windowHeight = window.innerHeight
+                const sceneHeight = rect.height
+                
+                const progress = Math.max(0, Math.min(1, 
+                  (windowHeight - rect.top) / (windowHeight + sceneHeight)
+                ))
+                setScrollProgress(progress)
+
+                // Text appears as you scroll - spread out more
+                setText1Visible(progress > 0.15)
+                setText2Visible(progress > 0.25)
+                setText3Visible(progress > 0.35)
+                // Fourth text appears after graffiti is fully visible (starts at 70% scroll)
+                setText4Visible(progress > 0.7)
+              }
+            }
+
+            window.addEventListener('scroll', handleScroll)
+            handleScroll()
+
+            return () => {
+              window.removeEventListener('scroll', handleScroll)
+            }
+          }, [])
+
+          // Without-graffiti overlay fades in after text appears (starts at 50%, fully visible at 65%)
+          const withoutGraffitiOpacity = Math.max(0, Math.min(1, (scrollProgress - 0.5) / 0.15))
+          
+          // With-graffiti overlay fades in after without-graffiti (starts at 60%, fully visible at 75%)
+          // Stays fully visible until 90%, then fades out
+          const graffitiOpacity = scrollProgress < 0.9 
+            ? Math.max(0, Math.min(1, (scrollProgress - 0.6) / 0.15))
+            : Math.max(0, 1 - (scrollProgress - 0.9) / 0.1)
+          
+          // Text disappears completely once graffiti starts appearing
+          // When graffiti opacity > 0, text opacity = 0
+          const textOpacity = graffitiOpacity > 0 ? 0 : 1
+          
+          // Fourth text box: stays visible longer, then slides up and fades out
+          // Starts fading/sliding up at 85% scroll progress
+          const text4Opacity = scrollProgress < 0.85 
+            ? (text4Visible ? 1 : 0)
+            : Math.max(0, 1 - (scrollProgress - 0.85) / 0.15)
+          
+          // Slide up animation for fourth text box (moves up as it fades)
+          // When not visible yet, start 20px below. When visible and before fade, stay at 0. When fading, slide up.
+          let text4TranslateY = 20 // Default: below
+          if (text4Visible) {
+            if (scrollProgress < 0.85) {
+              text4TranslateY = 0 // Visible and stable
+            } else {
+              // Calculate how far into the fade we are (0 to 1)
+              const fadeProgress = (scrollProgress - 0.85) / 0.15
+              // Move up 150px as it fades out
+              text4TranslateY = -150 * fadeProgress
+            }
+          }
+
+          return (
+            <div ref={sceneRef} className="scene01">
+              {/* Initial background */}
+              <div className="scene01__background">
+                <img 
+                  src="pictures/without graffiti 1.png" 
+                  alt="Subway car without graffiti"
+                  className="scene01__bg-image"
+                />
+              </div>
+
+              {/* Text overlays - fade out as graffiti appears */}
+              <div 
+                className={`scene01__text scene01__text--1 ${text1Visible ? 'visible' : ''}`}
+                style={{ opacity: text1Visible ? textOpacity : 0 }}
+              >
+                <p>A mysterious ad came to New York City riders.</p>
+              </div>
+
+              <div 
+                className={`scene01__text scene01__text--2 ${text2Visible ? 'visible' : ''}`}
+                style={{ opacity: text2Visible ? textOpacity : 0 }}
+              >
+                <p>No product description. No explanation.</p>
+              </div>
+
+              <div 
+                className={`scene01__text scene01__text--3 ${text3Visible ? 'visible' : ''}`}
+                style={{ opacity: text3Visible ? textOpacity : 0 }}
+              >
+                <p>When riders learned more about what this ominous ad was trying to sell…</p>
+              </div>
+
+              {/* Without-graffiti overlay - fades in on top of text */}
+              <div 
+                className="scene01__without-graffiti-overlay"
+                style={{ opacity: withoutGraffitiOpacity }}
+              >
+                <img 
+                  src="pictures/without graffiti 1.png" 
+                  alt="Subway car without graffiti overlay"
+                  className="scene01__bg-image"
+                />
+              </div>
+
+              {/* With-graffiti overlay - fades in on top of without-graffiti */}
+              <div 
+                className="scene01__graffiti-overlay"
+                style={{ opacity: graffitiOpacity }}
+              >
+                <img 
+                  src="pictures/with graffiti 1.PNG" 
+                  alt="Subway car with graffiti"
+                  className="scene01__bg-image"
+                />
+              </div>
+
+              {/* Fourth text overlay - appears on top of graffiti photo as you scroll */}
+              <div 
+                className={`scene01__text scene01__text--4 ${text4Visible ? 'visible' : ''}`}
+                style={{ 
+                  opacity: text4Opacity,
+                  transform: `translateX(-50%) translateY(${text4TranslateY}px)`,
+                  transition: 'opacity 0.3s ease-out' // Only transition opacity, not transform
+                }}
+              >
+                <p>"…they started writing back."</p>
+              </div>
             </div>
-        </section>
-        
-        <section class="gallery-section">
-            <h2>Gallery</h2>
-            <div class="gallery" id="gallery">
-                <!-- Images will be loaded dynamically -->
+          )
+        }
+
+        function Scene02() {
+          const [scrollProgress, setScrollProgress] = useState(0)
+          const [textVisible, setTextVisible] = useState(false)
+          const sceneRef = useRef(null)
+
+          useEffect(() => {
+            const handleScroll = () => {
+              if (sceneRef.current) {
+                const rect = sceneRef.current.getBoundingClientRect()
+                const windowHeight = window.innerHeight
+                const sceneHeight = rect.height
+                
+                // Calculate progress: 0 when scene enters viewport, 1 when it exits
+                // Only start animating when scene is in viewport
+                const progress = Math.max(0, Math.min(1, 
+                  (windowHeight - rect.top) / (windowHeight + sceneHeight)
+                ))
+                setScrollProgress(progress)
+                
+                // Text appears after graffiti is fully visible (starts at 55% scroll progress)
+                setTextVisible(progress > 0.55)
+              }
+            }
+
+            window.addEventListener('scroll', handleScroll)
+            handleScroll()
+
+            return () => {
+              window.removeEventListener('scroll', handleScroll)
+            }
+          }, [])
+
+          // Graffiti overlays fade in as you scroll through Scene02
+          // Start fading at 20% scroll progress, fully visible at 50%
+          // Then fade out smoothly starting at 60% - completely gone by 80%
+          // This ensures they fade away well before Scene03 intro text appears
+          const graffiti2Opacity = scrollProgress < 0.2
+            ? 0
+            : scrollProgress < 0.5
+            ? (scrollProgress - 0.2) / 0.3 // Fade in
+            : scrollProgress < 0.6
+            ? 1 // Fully visible
+            : scrollProgress < 0.8
+            ? Math.max(0, 1 - (scrollProgress - 0.6) / 0.2) // Fade out smoothly
+            : 0 // Completely gone by 80%
+            
+          const graffiti3Opacity = scrollProgress < 0.2
+            ? 0
+            : scrollProgress < 0.5
+            ? (scrollProgress - 0.2) / 0.3 // Fade in
+            : scrollProgress < 0.6
+            ? 1 // Fully visible
+            : scrollProgress < 0.8
+            ? Math.max(0, 1 - (scrollProgress - 0.6) / 0.2) // Fade out smoothly
+            : 0 // Completely gone by 80%
+          
+          // Only show images container when Scene02 is in viewport (progress > 0)
+          // Fade out the base images too as graffiti fades (for smooth transition)
+          // Start fading base images at 70%, completely gone by 85%
+          const containerOpacity = scrollProgress < 0.7
+            ? (scrollProgress > 0 ? 1 : 0)
+            : scrollProgress < 0.85
+            ? Math.max(0, 1 - (scrollProgress - 0.7) / 0.15)
+            : 0 // Completely gone
+          
+          // Text box: appears at 55%, stays visible until 90%, then fades out smoothly
+          // Fades out earlier to allow smooth transition to Scene03
+          const textOpacity = scrollProgress < 0.55
+            ? 0
+            : scrollProgress < 0.85
+            ? 1
+            : Math.max(0, 1 - (scrollProgress - 0.85) / 0.15)
+
+          return (
+            <div ref={sceneRef} className="scene02">
+              {/* Black background overlay - covers Scene01 */}
+              <div 
+                className="scene02__background"
+                style={{ opacity: containerOpacity }}
+              />
+              
+              <div 
+                className="scene02__images-container"
+                style={{ opacity: containerOpacity }}
+              >
+                {/* Left image - without graffiti 2 */}
+                <div className="scene02__image-wrapper">
+                  <img 
+                    src="pictures/without graffiti 2.png" 
+                    alt="Subway car without graffiti 2"
+                    className="scene02__base-image"
+                  />
+                  {/* Graffiti overlay for left image */}
+                  <div 
+                    className="scene02__graffiti-overlay"
+                    style={{ opacity: graffiti2Opacity }}
+                  >
+                    <img 
+                      src="pictures/with graffiti 2.PNG" 
+                      alt="Subway car with graffiti 2"
+                      className="scene02__graffiti-image"
+                    />
+                  </div>
+                </div>
+
+                {/* Right image - without graffiti 3 */}
+                <div className="scene02__image-wrapper">
+                  <img 
+                    src="pictures/without graffiti 3.png" 
+                    alt="Subway car without graffiti 3"
+                    className="scene02__base-image"
+                  />
+                  {/* Graffiti overlay for right image */}
+                  <div 
+                    className="scene02__graffiti-overlay"
+                    style={{ opacity: graffiti3Opacity }}
+                  >
+                    <img 
+                      src="pictures/with graffiti 3.PNG" 
+                      alt="Subway car with graffiti 3"
+                      className="scene02__graffiti-image"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              {/* Text overlay - appears on top of graffiti images as you scroll */}
+              <div 
+                className="scene02__text"
+                style={{ 
+                  opacity: textOpacity,
+                  transform: textVisible 
+                    ? 'translateX(-50%) translateY(-50%)' 
+                    : 'translateX(-50%) translateY(calc(-50% + 20px))'
+                }}
+              >
+                <p>Ads were defaced just as quickly as they appeared, with graffiti displaying a vast array of sentiments.</p>
+              </div>
             </div>
-        </section>
-    </main>
-    
-    <footer>
-        <p>&copy; 2024 friend.com</p>
-    </footer>
-    
-    <script src="script.js"></script>
+          )
+        }
+
+        function Scene03() {
+          const [scrollProgress, setScrollProgress] = useState(0)
+          const [introTextVisible, setIntroTextVisible] = useState(false)
+          const [imagesVisible, setImagesVisible] = useState(false)
+          const sceneRef = useRef(null)
+
+          useEffect(() => {
+            const handleScroll = () => {
+              if (sceneRef.current) {
+                const rect = sceneRef.current.getBoundingClientRect()
+                const windowHeight = window.innerHeight
+                const sceneHeight = rect.height
+                
+                const progress = Math.max(0, Math.min(1, 
+                  (windowHeight - rect.top) / (windowHeight + sceneHeight)
+                ))
+                setScrollProgress(progress)
+                
+                // Intro text appears immediately when Scene03 starts (at 0% scroll progress)
+                // This makes it appear as soon as Scene03 enters viewport
+                setIntroTextVisible(progress > 0)
+                
+                // Images appear at 25% scroll progress (after intro text)
+                setImagesVisible(progress > 0.25)
+              }
+            }
+
+            window.addEventListener('scroll', handleScroll)
+            handleScroll()
+
+            return () => {
+              window.removeEventListener('scroll', handleScroll)
+            }
+          }, [])
+
+          // Intro text: appears immediately when Scene03 starts (at 0%), disappears when images appear at 25%
+          // Smooth fade in from 0% to 5%, then fade out from 20% to 25%
+          const introTextOpacity = scrollProgress < 0.05
+            ? scrollProgress / 0.05 // Fade in quickly
+            : scrollProgress < 0.2
+            ? 1 // Fully visible
+            : scrollProgress < 0.25
+            ? 1 - ((scrollProgress - 0.2) / 0.05) // Fade out
+            : 0 // Disappears when images appear
+          
+          const introTextTranslateY = scrollProgress < 0.05
+            ? 20 * (1 - scrollProgress / 0.05) // Slide up as it fades in
+            : scrollProgress < 0.25
+            ? 0
+            : -30 // Moves up slightly as it disappears
+
+          // Images: appear at 25%, stay until 70%, then fade out and move up
+          const imagesOpacity = scrollProgress < 0.25
+            ? 0
+            : scrollProgress < 0.7
+            ? 1
+            : Math.max(0, 1 - (scrollProgress - 0.7) / 0.2)
+          
+          const imagesTranslateY = scrollProgress < 0.25
+            ? 20
+            : scrollProgress < 0.7
+            ? 0
+            : -50 * ((scrollProgress - 0.7) / 0.2)
+          
+          // Black background overlay - covers Scene02 when Scene03 appears
+          const backgroundOpacity = scrollProgress > 0 ? 1 : 0
+
+          return (
+            <div ref={sceneRef} className="scene03">
+              {/* Black background overlay - covers Scene02 */}
+              <div 
+                className="scene03__background"
+                style={{ opacity: backgroundOpacity }}
+              />
+              
+              {/* Intro text */}
+              <div 
+                className="scene03__intro-text"
+                style={{ 
+                  opacity: introTextOpacity,
+                  transform: `translateX(-50%) translateY(calc(-50% + ${introTextTranslateY}px))`
+                }}
+              >
+                <p>Across the city, the white blank spaces on the ads were filled with…</p>
+              </div>
+
+              {/* Images with labels */}
+              <div 
+                className="scene03__images-container"
+                style={{ 
+                  opacity: imagesOpacity,
+                  transform: `translateX(-50%) translateY(calc(-50% + ${imagesTranslateY}px))`
+                }}
+              >
+                <div className="scene03__image-item">
+                  <img 
+                    src="pictures/0019.png" 
+                    alt="Graffiti response 1"
+                    className="scene03__image"
+                  />
+                  <div className="scene03__label">
+                    warnings,
+                  </div>
+                </div>
+
+                <div className="scene03__image-item">
+                  <img 
+                    src="pictures/0006.png" 
+                    alt="Graffiti response 2"
+                    className="scene03__image"
+                  />
+                  <div className="scene03__label">
+                    silly quips,
+                  </div>
+                </div>
+
+                <div className="scene03__image-item">
+                  <img 
+                    src="pictures/0070.png" 
+                    alt="Graffiti response 3"
+                    className="scene03__image"
+                  />
+                  <div className="scene03__label">
+                    and strong social critiques.
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
+        function Scene04() {
+          const [text1Visible, setText1Visible] = useState(false)
+          const [reactionBlockVisible, setReactionBlockVisible] = useState(false)
+          const [backgroundVisible, setBackgroundVisible] = useState(false)
+          const text1SentinelRef = useRef(null)
+          const reactionBlockSentinelRef = useRef(null)
+          const backgroundSentinelRef = useRef(null)
+
+          useEffect(() => {
+            // Observer for first text - triggers much earlier
+            const observer1 = new IntersectionObserver(
+              (entries) => {
+                entries.forEach(entry => {
+                  if (entry.target === text1SentinelRef.current) {
+                    setText1Visible(entry.isIntersecting)
+                  }
+                })
+              },
+              { threshold: 0, rootMargin: '0px 0px -50% 0px' }
+            )
+
+            // Observer for reaction block - simple observer
+            const observer2 = new IntersectionObserver(
+              (entries) => {
+                entries.forEach(entry => {
+                  if (entry.target === reactionBlockSentinelRef.current) {
+                    setReactionBlockVisible(entry.isIntersecting)
+                  }
+                })
+              },
+              { threshold: 0, rootMargin: '0px' }
+            )
+
+            // Observer for background
+            const observer3 = new IntersectionObserver(
+              (entries) => {
+                entries.forEach(entry => {
+                  if (entry.target === backgroundSentinelRef.current) {
+                    setBackgroundVisible(entry.isIntersecting)
+                  }
+                })
+              },
+              { threshold: 0.2, rootMargin: '0px' }
+            )
+
+            // Observe sentinels only, not the reaction block
+            if (text1SentinelRef.current) observer1.observe(text1SentinelRef.current)
+            if (reactionBlockSentinelRef.current) {
+              observer2.observe(reactionBlockSentinelRef.current)
+            }
+            if (backgroundSentinelRef.current) observer3.observe(backgroundSentinelRef.current)
+
+            return () => {
+              observer1.disconnect()
+              observer2.disconnect()
+              observer3.disconnect()
+            }
+          }, [])
+
+          return (
+            <div className="scene04">
+              {/* Background section with sentinel */}
+              <section className="scene04__section">
+                <div ref={backgroundSentinelRef} className="scene04__sentinel" />
+                <div className="scene04__content">
+                  <div className={`scene04__background ${backgroundVisible ? 'visible' : ''}`} />
+                </div>
+              </section>
+
+              {/* First text section with sentinel */}
+              <section className="scene04__section">
+                <div ref={text1SentinelRef} className="scene04__sentinel" />
+                <div className="scene04__content">
+                  <div className={`scene04__text scene04__text--1 ${text1Visible ? 'visible' : ''}`}>
+                    <p>One response was pretty clear.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Reaction block - text + grid grouped together */}
+              <section className="scene04__section">
+                <div className="scene04__spacer" />
+                <div ref={reactionBlockSentinelRef} className="scene04__sentinel" />
+                <div className={`scene04__reaction-block ${text1Visible || reactionBlockVisible ? 'visible' : ''}`}>
+                  {/* Second text box - title above grid - appears with first text */}
+                  <div className={`scene04__text scene04__text--2 ${text1Visible ? 'visible' : ''}`}>
+                    <p>New York wasn't interested in friendship.</p>
+                  </div>
+
+                  {/* Image grid - only visible when reactionBlockVisible is true */}
+                  {reactionBlockVisible && (
+                    <div className="scene04__grid-container">
+                      <img 
+                        src="pictures/0029.png" 
+                        alt="Graffiti response"
+                        className="scene04__grid-image"
+                      />
+                      <img 
+                        src="pictures/0036.png" 
+                        alt="Graffiti response"
+                        className="scene04__grid-image"
+                      />
+                      <img 
+                        src="pictures/0037.png" 
+                        alt="Graffiti response"
+                        className="scene04__grid-image"
+                      />
+                      <img 
+                        src="pictures/0041.png" 
+                        alt="Graffiti response"
+                        className="scene04__grid-image"
+                      />
+                      <img 
+                        src="pictures/0035.png" 
+                        alt="Graffiti response"
+                        className="scene04__grid-image"
+                      />
+                      <img 
+                        src="pictures/0053.png" 
+                        alt="Graffiti response"
+                        className="scene04__grid-image"
+                      />
+                      <img 
+                        src="pictures/0055.png" 
+                        alt="Graffiti response"
+                        className="scene04__grid-image"
+                      />
+                      <img 
+                        src="pictures/0072.png" 
+                        alt="Graffiti response"
+                        className="scene04__grid-image"
+                      />
+                    </div>
+                  )}
+                </div>
+              </section>
+            </div>
+          )
+        }
+
+        function App() {
+          return (
+            <>
+              <Scene01 />
+              <Scene02 />
+              <Scene03 />
+              <Scene04 />
+            </>
+          )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'))
+        root.render(React.createElement(App))
+    </script>
 </body>
 </html>
 
